@@ -1,5 +1,3 @@
-estoy usan html y css
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -160,7 +158,90 @@ estoy usan html y css
     .ripple { position:absolute; border-radius:50%; transform:scale(0); background:rgba(255,255,255,0.4); animation:rippleEffect 0.6s linear; }
     @keyframes rippleEffect { to{transform:scale(4);opacity:0} }
 
-    @media (max-width:600px){ .icon-bg{padding:12px} .icon-bg ion-icon{font-size:2rem} .icon-item span{font-size:12px} .logo img{max-width:140px} }
+    /* Modal Afiliados */
+    .afiliados-modal {
+      display: none;
+      position: fixed; z-index: 10000; left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(10,10,13,0.92);
+      align-items: center; justify-content: center;
+    }
+    .afiliados-content {
+      background: var(--bg-2);
+      padding: 32px 24px;
+      border-radius: 18px;
+      max-width: 600px;
+      width: 90vw;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      position: relative;
+      color: var(--text-light);
+      text-align: center;
+    }
+    .afiliados-close {
+      position: absolute; top: 16px; right: 20px;
+      font-size: 2rem; cursor: pointer; color: var(--accent);
+    }
+    .afiliados-grid {
+      display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-top: 24px;
+    }
+    .afiliado-card {
+      background: var(--bg-1);
+      border-radius: 12px;
+      padding: 18px 12px;
+      width: 160px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .afiliado-card img {
+      width: 64px; height: 64px; object-fit: contain; margin-bottom: 10px;
+      background: #fff; border-radius: 8px; padding: 4px;
+    }
+    .afiliado-card h3 {
+      font-size: 1.1rem; margin-bottom: 8px; color: var(--accent);
+    }
+    .afiliado-card a {
+      color: var(--accent); text-decoration: none; font-size: 0.95rem; margin: 2px 0;
+      transition: text-decoration .2s;
+    }
+    .afiliado-card a:hover { text-decoration: underline; }
+    @media (max-width:600px){
+      .icon-bg{padding:12px}
+      .icon-bg ion-icon{font-size:2rem}
+      .icon-item span{font-size:12px}
+      .logo img{max-width:140px}
+      .afiliados-content { padding: 16px 4px; }
+      .afiliado-card { width: 120px; padding: 10px 4px; }
+      .afiliado-card img { width: 48px; height: 48px; }
+    }
+    /* Modal Imagen Promoción */
+    #img-modal {
+      display: none;
+      position: fixed;
+      z-index: 20000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(10,10,13,0.95);
+      align-items: center; justify-content: center;
+    }
+    #img-modal img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+      background: #fff;
+      padding: 8px;
+      display: block;
+      margin: auto;
+    }
+    #img-modal-close {
+      position: absolute;
+      top: 24px;
+      right: 40px;
+      font-size: 2.5rem;
+      color: var(--accent);
+      cursor: pointer;
+      z-index: 2;
+    }
   </style>
 </head>
 <body>
@@ -185,10 +266,10 @@ estoy usan html y css
       <a href="https://www.instagram.com/elitealiadosloyal?utm_source=qr&igsh=cjd4dWsyY3MzdmYy" class="icon-item" data-tilt>
         <div class="icon-bg"><ion-icon name="logo-instagram"></ion-icon></div><span>Instagram</span>
       </a>
-      <a href="https://tu-sitio.com/convenios" class="icon-item" data-tilt>
+      <a href="#" id="afiliados-btn" class="icon-item" data-tilt>
         <div class="icon-bg"><ion-icon name="people-outline"></ion-icon></div><span>Afiliados</span>
       </a>
-      <a href="https://tu-sitio.com/poliza-rcv" class="icon-item" data-tilt>
+      <a href="http://wa.me/+584149208034" class="icon-item" data-tilt>
         <div class="icon-bg"><ion-icon name="file-tray-full-outline"></ion-icon></div><span>Póliza RCV</span>
       </a>
       <a href="https://tu-sitio.com/poliza-grua" class="icon-item" data-tilt>
@@ -200,12 +281,61 @@ estoy usan html y css
       <a href="https://tu-sitio.com/asesoria-juridica" class="icon-item" data-tilt>
         <div class="icon-bg"><ion-icon name="clipboard-outline"></ion-icon></div><span>Asesoría Jurídica</span>
       </a>
-      <a href="https://tu-sitio.com/promociones" class="icon-item" data-tilt>
+      <a href="#" id="promociones-btn" class="icon-item" data-tilt>
         <div class="icon-bg"><ion-icon name="pricetags-outline"></ion-icon></div><span>Promociones</span>
       </a>
-    </div><span>Dirección</span></a>
-      <!-- resto de iconos igual -->
     </div>
+  </div>
+
+  <!-- Modal Afiliados -->
+  <div id="afiliados-modal" class="afiliados-modal">
+    <div class="afiliados-content">
+      <span class="afiliados-close" id="afiliados-close">&times;</span>
+      <h2>Afiliados</h2>
+      <div class="afiliados-grid">
+        <!-- Ejemplo de empresa afiliada -->
+        <div class="afiliado-card">
+          <img src="assets/afiliados/constructora.jpeg" alt="Empresa 1">
+          <h3>Constructora Ap Rascacielos C.A</h3>
+          <a href="https://wa.me/+584242610788" target="_blank">Contacto</a>
+          <a href="https://www.instagram.com/constructoraaprascacielos?igsh=MTI1ZGY5NzJlbThiYQ==" target="_blank">Instagram</a>
+          <a href="https://maps.app.goo.gl/Ehx9Xio31t2jxtHb9?g_st=aw" target="_blank">Ubicación</a>
+        </div>
+        <div class="afiliado-card">
+          <img src="assets/logo_empresa2.png" alt="Empresa 2">
+          <h3>Empresa 2</h3>
+          <a href="http://wa.me/+584129961799" target="_blank">Contacto</a>
+          <a href="https://maps.app.goo.gl/Ehx9Xio31t2jxtHb9?g_st=aw" target="_blank">Ubicación</a>
+        </div>
+        <!-- Agrega más empresas aquí -->
+      </div>
+    </div>
+  </div>
+  <!-- Modal Promociones -->
+  <div id="promociones-modal" class="afiliados-modal">
+    <div class="afiliados-content">
+      <span class="afiliados-close" id="promociones-close">&times;</span>
+      <h2>Promociones</h2>
+      <div class="afiliados-grid">
+        <div class="afiliado-card">
+          <img src="assets/promociones/promo1.jpeg" alt="Promo 1" class="promo-img">
+        </div>
+        <div class="afiliado-card">
+          <img src="assets/promociones/promo2.jpeg" alt="Promo 2" class="promo-img">
+        </div>
+        <div class="afiliado-card">
+          <img src="assets/promociones/promo3.jpeg" alt="Promo 3" class="promo-img">
+        </div>
+        <div class="afiliado-card">
+          <img src="assets/promociones/promo4.jpeg" alt="Promo 4" class="promo-img">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Imagen Promoción -->
+  <div id="img-modal">
+    <span id="img-modal-close">&times;</span>
+    <img id="img-modal-src" src="" alt="Promoción">
   </div>
 
   <script>
@@ -251,7 +381,71 @@ estoy usan html y css
     });
     // Toggle
     const btn=document.getElementById('theme-toggle');btn.addEventListener('click',()=>{document.body.classList.toggle('light-mode');btn.textContent=document.body.classList.contains('light-mode')?'🌞':'🌙';});
+
+    // Modal Afiliados
+    const afiliadosBtn = document.getElementById('afiliados-btn');
+    const afiliadosModal = document.getElementById('afiliados-modal');
+    const afiliadosClose = document.getElementById('afiliados-close');
+
+    afiliadosBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      afiliadosModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    afiliadosClose.addEventListener('click', function() {
+      afiliadosModal.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+    window.addEventListener('click', function(e) {
+      if (e.target === afiliadosModal) {
+        afiliadosModal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Modal Promociones
+    const promocionesBtn = document.getElementById('promociones-btn');
+    const promocionesModal = document.getElementById('promociones-modal');
+    const promocionesClose = document.getElementById('promociones-close');
+
+    promocionesBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      promocionesModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    promocionesClose.addEventListener('click', function() {
+      promocionesModal.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+    window.addEventListener('click', function(e) {
+      if (e.target === promocionesModal) {
+        promocionesModal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Modal Imagen Promoción
+    const imgModal = document.getElementById('img-modal');
+    const imgModalSrc = document.getElementById('img-modal-src');
+    const imgModalClose = document.getElementById('img-modal-close');
+    document.querySelectorAll('.promo-img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function() {
+        imgModalSrc.src = this.src;
+        imgModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    imgModalClose.addEventListener('click', function() {
+      imgModal.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+    imgModal.addEventListener('click', function(e) {
+      if (e.target === imgModal) {
+        imgModal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
   </script>
 </body>
 </html>
-
