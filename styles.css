@@ -195,4 +195,73 @@ body {
   .afiliados-content { padding: 16px 4px; }
   .afiliado-card { width: 120px; padding: 10px 4px; }
   .afiliado-card img { width: 48px; height: 48px; }
+
+/* Ripple */
+.ripple { 
+  position:absolute; 
+  border-radius:50%; 
+  transform:scale(0); 
+  background:rgba(255,255,255,0.4); 
+  animation:rippleEffect 0.6s linear; 
+}
+@keyframes rippleEffect { 
+  to{transform:scale(4);opacity:0} 
+}
+
+/* Modal Afiliados */
+.afiliados-modal {
+  display: none;
+  position: fixed; z-index: 10000; left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(10,10,13,0.92);
+  align-items: center; justify-content: center;
+}
+.afiliados-content {
+  background: var(--bg-2);
+  padding: 32px 24px;
+  border-radius: 18px;
+  max-width: 600px;
+  width: 90vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  position: relative;
+  color: var(--light);
+  text-align: center;
+}
+.afiliados-close {
+  position: absolute; top: 16px; right: 20px;
+  font-size: 2rem; cursor: pointer; color: var(--accent);
+}
+.afiliados-grid {
+  display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-top: 24px;
+}
+.afiliado-card {
+  background: var(--bg-1);
+  border-radius: 12px;
+  padding: 18px 12px;
+  width: 160px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  display: flex; flex-direction: column; align-items: center;
+}
+.afiliado-card img {
+  width: 64px; height: 64px; object-fit: contain; margin-bottom: 10px;
+  background: #fff; border-radius: 8px; padding: 4px;
+}
+.afiliado-card h3 {
+  font-size: 1.1rem; margin-bottom: 8px; color: var(--accent);
+}
+.afiliado-card a {
+  color: var(--accent); text-decoration: none; font-size: 0.95rem; margin: 2px 0;
+  transition: text-decoration .2s;
+}
+.afiliado-card a:hover { text-decoration: underline; }
+
+@media (max-width:600px){
+  .icon-bg{padding:12px}
+  .icon-bg img{width:32px;height:32px;}
+  .icon-item span{font-size:12px}
+  .logo img{max-width:140px}
+  .afiliados-content { padding: 16px 4px; }
+  .afiliado-card { width: 120px; padding: 10px 4px; }
+  .afiliado-card img { width: 48px; height: 48px; }
   }
+}
