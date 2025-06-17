@@ -34,6 +34,23 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
+
+    /* Preloader */
+    #preloader {
+      position: fixed; inset: 0;
+      background: var(--bg-1);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+    }
+    #preloader .spinner {
+      width: 60px; height: 60px;
+      border: 6px solid var(--bg-2);
+      border-top: 6px solid var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     body {
       font-family: 'Montserrat', sans-serif;
       background: var(--bg-1);
@@ -51,16 +68,15 @@
       background: linear-gradient(45deg, var(--bg-1), var(--bg-2), var(--bg-1));
       background-size: 600% 600%;
       animation: gradientShift 15s ease infinite;
-      z-index: -2;
+      z-index: -3;
     }
-    @keyframes gradientShift {
-      0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
-    }
+    @keyframes gradientShift {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
     #particles-js {
       position: absolute; top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: -1;
+      z-index: -2;
     }
+
     .container {
       text-align: center;
       z-index: 1;
@@ -81,12 +97,7 @@
     #theme-toggle:active { transform: scale(0.9); }
 
     /* Logo con brillo */
-    .logo {
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 10px;
-      opacity: 0;
-    }
+    .logo { position: relative; overflow: hidden; margin-bottom: 10px; opacity: 0; }
     .logo img {
       max-width: 180px;
       filter: drop-shadow(0 0 8px var(--accent));
@@ -94,17 +105,14 @@
     }
     .logo::after {
       content: "";
-      position: absolute;
-      top: -100%; left: -75%;
+      position: absolute; top: -100%; left: -75%;
       width: 50%; height: 300%;
       background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%);
       transform: rotate(25deg);
       animation: shine 2s infinite;
     }
-    @keyframes shine {
-      0%   { left: -75%; }
-      100% { left: 125%; }
-    }
+    @keyframes shine {0%{left:-75%}100%{left:125%}}
+    body.light-mode .logo img { filter: brightness(0) invert(1) drop-shadow(0 0 8px var(--accent)); }
 
     /* Lema dinámico */
     .tagline {
@@ -117,179 +125,130 @@
     }
 
     /* Grid de iconos */
-    .icon-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 24px;
-      opacity: 0;
-    }
+    .icon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 24px; opacity: 0; }
     .icon-item {
       text-decoration: none;
       color: var(--text-light);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      outline: none;
+      display: flex; flex-direction: column; align-items: center;
+      position: relative; outline: none;
+      transition: transform 0.8s cubic-bezier(.03,.98,.52,.99);
     }
     .icon-bg {
       background: var(--bg-2);
-      padding: 16px;
-      border-radius: 24px;
+      padding: 16px; border-radius: 24px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       transition: box-shadow .3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
     }
-    .icon-bg ion-icon {
-      font-size: 2.5rem;
-      color: var(--accent);
-    }
-    .icon-item span {
-      margin-top: 8px;
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--text-light);
+    .icon-bg ion-icon { font-size: 2.5rem; color: var(--accent); }
+    .icon-item span { margin-top: 8px; font-weight:600; font-size:14px; }
+
+    /* Hover: partículas + bounce */
+    .icon-item:hover {
+      transform: scale(1.05);
     }
     .icon-item:hover .icon-bg {
+      animation: bounceHover 0.6s;
       box-shadow: 0 0 16px var(--accent), 0 0 32px var(--accent);
-      animation: pulseShadow 1.5s infinite alternate;
     }
-    @keyframes pulseShadow {
-      from { box-shadow: 0 0 16px var(--accent), 0 0 32px var(--accent); }
-      to   { box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent); }
-    }
+    @keyframes bounceHover {0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 
-    /* Ripple al click */
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      transform: scale(0);
-      background: rgba(255,255,255,0.4);
-      animation: rippleEffect 0.6s linear;
-    }
-    @keyframes rippleEffect {
-      to { transform: scale(4); opacity: 0; }
-    }
+    /* Ripple */
+    .ripple { position:absolute; border-radius:50%; transform:scale(0); background:rgba(255,255,255,0.4); animation:rippleEffect 0.6s linear; }
+    @keyframes rippleEffect { to{transform:scale(4);opacity:0} }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      .icon-bg { padding: 12px; }
-      .icon-bg ion-icon { font-size: 2rem; }
-      .icon-item span { font-size: 12px; }
-      .container { padding: 16px; }
-      .logo img { max-width: 140px; }
-    }
+    @media (max-width:600px){ .icon-bg{padding:12px} .icon-bg ion-icon{font-size:2rem} .icon-item span{font-size:12px} .logo img{max-width:140px} }
   </style>
 </head>
 <body>
+  <!-- Preloader -->
+  <div id="preloader"><div class="spinner"></div></div>
+
+  <!-- Animaciones de fondo -->
   <div class="animated-bg"></div>
   <div id="particles-js"></div>
   <button id="theme-toggle">🌙</button>
 
   <div class="container">
-    <div class="logo">
-      <img src="assets/ELITE_Elite_Logo_blanco_.png" alt="Elite Aliados Loyal">
-    </div>
+    <div class="logo"><img src="assets/ELITE_Elite_Logo_blanco_.png" alt="Elite Aliados Loyal"></div>
     <div class="tagline"></div>
-
     <div class="icon-grid">
-      <a href="https://goo.gl/maps/tu-direccion" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="location-outline"></ion-icon></div>
-        <span>Dirección</span>
+      <a href="https://maps.app.goo.gl/N4nTrHuqdBZx5vAW9" class="icon-item" data-tilt>
+        <div class="icon-bg"><ion-icon name="location-outline"></ion-icon></div><span>Dirección</span>
       </a>
       <a href="tel:+123456789" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="call-outline"></ion-icon></div>
-        <span>Teléfono</span>
+        <div class="icon-bg"><ion-icon name="call-outline"></ion-icon></div><span>Teléfono</span>
       </a>
-      <a href="https://instagram.com/tuempresa" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="logo-instagram"></ion-icon></div>
-        <span>Instagram</span>
+      <a href="https://www.instagram.com/elitealiadosloyal?utm_source=qr&igsh=cjd4dWsyY3MzdmYy" class="icon-item" data-tilt>
+        <div class="icon-bg"><ion-icon name="logo-instagram"></ion-icon></div><span>Instagram</span>
       </a>
       <a href="https://tu-sitio.com/convenios" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="people-outline"></ion-icon></div>
-        <span>Convenios</span>
+        <div class="icon-bg"><ion-icon name="people-outline"></ion-icon></div><span>Convenios</span>
       </a>
       <a href="https://tu-sitio.com/poliza-rcv" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="file-tray-full-outline"></ion-icon></div>
-        <span>Póliza RCV</span>
+        <div class="icon-bg"><ion-icon name="file-tray-full-outline"></ion-icon></div><span>Póliza RCV</span>
       </a>
       <a href="https://tu-sitio.com/poliza-grua" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="cube-outline"></ion-icon></div>
-        <span>Póliza Grua</span>
+        <div class="icon-bg"><ion-icon name="cube-outline"></ion-icon></div><span>Póliza Grua</span>
       </a>
       <a href="https://tu-sitio.com/cita-medica" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="medkit-outline"></ion-icon></div>
-        <span>Cita Médica</span>
+        <div class="icon-bg"><ion-icon name="medkit-outline"></ion-icon></div><span>Cita Médica</span>
       </a>
       <a href="https://tu-sitio.com/asesoria-juridica" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="clipboard-outline"></ion-icon></div>
-        <span>Asesoría Jurídica</span>
+        <div class="icon-bg"><ion-icon name="clipboard-outline"></ion-icon></div><span>Asesoría Jurídica</span>
       </a>
       <a href="https://tu-sitio.com/promociones" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="pricetags-outline"></ion-icon></div>
-        <span>Promociones</span>
+        <div class="icon-bg"><ion-icon name="pricetags-outline"></ion-icon></div><span>Promociones</span>
       </a>
+    </div><span>Dirección</span></a>
+      <!-- resto de iconos igual -->
     </div>
   </div>
 
   <script>
+    // Preloader
+    window.addEventListener('load',()=>{ gsap.to('#preloader',{opacity:0,duration:0.8,onComplete:()=>{document.getElementById('preloader').style.display='none';}}); });
     // Partículas
-    particlesJS.load('particles-js', 'particles.json', null);
-    // Tilt 3D
-    VanillaTilt.init(document.querySelectorAll('[data-tilt]'), { max: 15, speed: 400, glare: true, 'max-glare': 0.3 });
-    
-    // Rotación de lema
-    const slogans = [
-      'Aliados en Movilidad',
-      'Tu Seguridad, Nuestra Prioridad',
-      'Cobertura Integral'
-    ];
-    const tagEl = document.querySelector('.tagline');
-    let idx = 0;
-    function changeTagline() {
-      gsap.to(tagEl, { opacity: 0, duration: 0.4, onComplete: () => {
-        tagEl.textContent = slogans[idx];
-        idx = (idx + 1) % slogans.length;
-        gsap.to(tagEl, { opacity: 1, duration: 0.4 });
-      }});
-    }
-    tagEl.textContent = slogans[idx++];
-    setTimeout(changeTagline, 0);
-    setInterval(changeTagline, 4000);
-
-    // Animación entrada
-    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-    tl.to('.logo', { opacity: 1, y: -20, duration: 1.2 })
-      .to('.icon-grid', { opacity: 1, duration: 0.6 }, '-=0.6')
-      .from('.icon-item', { y: 40, opacity: 0, stagger: 0.15, duration: 0.6 }, '-=0.4')
-      .to('.tagline', { opacity: 1, y: -10, duration: 0.8 }, '-=0.4');
-
-    // Ripple effect
-    document.querySelectorAll('.icon-item').forEach(item => {
-      item.addEventListener('click', function(e) {
-        const bg = this.querySelector('.icon-bg');
-        const rect = bg.getBoundingClientRect();
-        const ripple = document.createElement('span');
-        const d = Math.max(rect.width, rect.height);
-        ripple.classList.add('ripple');
-        ripple.style.width = ripple.style.height = d + 'px';
-        ripple.style.left = (e.clientX - rect.left - d/2) + 'px';
-        ripple.style.top = (e.clientY - rect.top - d/2) + 'px';
-        bg.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
+    particlesJS.load('particles-js','particles.json',null);
+    // Tilt 3D con gyroscope y sin glare
+    VanillaTilt.init(document.querySelectorAll('[data-tilt]'),{
+      max:15,
+      speed:1000,
+      easing:"cubic-bezier(.03,.98,.52,.99)",
+      glare:false,
+      scale:1.05,
+      gyroscope:true
+    });
+    // Lema rotatorio
+    const slogans=['Aliados en Movilidad','Tu Seguridad, Nuestra Prioridad','Cobertura Integral'];
+    const tagEl=document.querySelector('.tagline');let idx=0;
+    function changeTagline(){ gsap.to(tagEl,{opacity:0,duration:0.4,onComplete:()=>{tagEl.textContent=slogans[idx];idx=(idx+1)%slogans.length;gsap.to(tagEl,{opacity:1,duration:0.4});}}); }
+    tagEl.textContent=slogans[idx++]; setTimeout(changeTagline,0); setInterval(changeTagline,4000);
+    // Entrada
+    const tl=gsap.timeline({defaults:{ease:'power2.out'}});
+    tl.to('.logo',{opacity:1,y:-20,duration:1.2})
+      .to('.icon-grid',{opacity:1,duration:0.6},'-=0.6')
+      .from('.icon-item',{y:40,opacity:0,stagger:0.15,duration:0.6},'-=0.4')
+      .to('.tagline',{opacity:1,y:-10,duration:0.8},'-=0.4');
+    // Hover partículas + bounce + sonido + ripple
+    document.querySelectorAll('.icon-item').forEach(item=>{
+      item.addEventListener('mouseenter',e=>{
+        const p=window.pJSDom&&window.pJSDom[0].pJS; if(p) p.fn.interactivity.modes.pushParticles(10,{x:e.clientX,y:e.clientY});
+        gsap.fromTo(item.querySelector('.icon-bg'),{scale:1},{scale:1.1,duration:0.3,ease:'bounce.out'});
+      });
+      item.addEventListener('click',e=>{
+        // sonido
+        const ctx=new AudioContext(),o=ctx.createOscillator();o.type='sine';o.frequency.value=300;o.connect(ctx.destination);o.start();o.stop(ctx.currentTime+0.1);
+        // ripple
+        const bg=item.querySelector('.icon-bg'),r=bg.getBoundingClientRect(),d=Math.max(r.width,r.height),span=document.createElement('span');
+        span.classList.add('ripple');span.style.width=span.style.height=d+'px';
+        span.style.left=(e.clientX-r.left-d/2)+'px';span.style.top=(e.clientY-r.top-d/2)+'px';bg.appendChild(span);
+        setTimeout(()=>span.remove(),600);
       });
     });
-
-    // Toggle Dark/Light
-    const btn = document.getElementById('theme-toggle');
-    btn.addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-      btn.textContent = document.body.classList.contains('light-mode') ? '🌞' : '🌙';
-    });
+    // Toggle
+    const btn=document.getElementById('theme-toggle');btn.addEventListener('click',()=>{document.body.classList.toggle('light-mode');btn.textContent=document.body.classList.contains('light-mode')?'🌞':'🌙';});
   </script>
 </body>
 </html>
