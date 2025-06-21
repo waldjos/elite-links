@@ -1,195 +1,267 @@
+/* ————— Variables ————— */
 :root {
-  --bg-1: #0a0a0d;
-  --bg-2: #1a1a29;
-  --accent: #00e5ff;
-  --light: #ffffff;
+  --navy: #0b1e42;
+  --blue: #3498db;
+  --green: #2ecc71;
+  --white: #ecf0f1;
+  --transition: 0.3s ease;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
+/* ————— Global ————— */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
 body {
-  font-family: 'Montserrat', sans-serif;
-  overflow: hidden;
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+}
+.app {
+  max-width: 480px;
+  margin: auto;
+  padding: 1rem;
   position: relative;
-  min-height: 100vh;
-  background: var(--bg-1);
-  color: var(--light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* 1. Fondo animado */
-.animated-bg {
-  position: absolute; top:0; left:0;
-  width:100%; height:100%;
-  background: linear-gradient(45deg, var(--bg-1), var(--bg-2), var(--bg-1));
-  background-size: 600% 600%;
-  animation: gradientShift 15s ease infinite;
+/* ————— Fondo animado ————— */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(46,204,113,0.2), transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(52,152,219,0.2), transparent 50%),
+    repeating-linear-gradient(
+      120deg,
+      rgba(255,255,255,0.02),
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 60px
+    );
+  animation: bgMove 20s linear infinite;
+  pointer-events: none;
   z-index: -1;
 }
-@keyframes gradientShift {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+@keyframes bgMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-25%, -25%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
-.container {
-  text-align: center;
-  z-index: 1;
-  padding: 20px;
+/* ————— Header ————— */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
-
-/* Logo */
 .logo {
-  position: relative; /* para contener el ::after */
-  overflow: hidden;
-  margin-bottom: 40px;
-  opacity: 0;
+  display: flex;
+  align-items: center;
 }
-
-.logo img {
-  max-width: 180px;
-  filter: drop-shadow(0 0 8px var(--accent));
-  transition: filter .3s;
+.wifi-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--green);
+  margin-right: 0.5rem;
 }
-
-/* El pseudo-elemento que será el brillo */
-.logo::after {
-  content: "";
-  position: absolute;
-  top: -100%;
-  left: -75%;
-  width: 50%;
-  height: 300%;
-  background: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255,255,255,0.6) 50%,
-    transparent 70%
-  );
-  transform: rotate(25deg);
-  animation: shine 2s infinite;
+.car-icon {
+  width: 40px;
+  height: 24px;
+  color: var(--white);
+  margin-right: 0.5rem;
 }
-
-@keyframes shine {
-  0% { left: -75%; }
-  100% { left: 125%; }
+.logo h1 {
+  font-size: 1.8rem;
+  line-height: 1;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
-
-/* 3. Grid */
-.icon-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 24px;
-  opacity: 0;
-}
-
-/* 4. Icono */
-.icon-item {
-  text-decoration: none;
-  color: var(--light);
-  display: inline-block;
-  transform: perspective(500px) rotateX(0deg) rotateY(0deg);
-}
-.icon-bg {
-  background: var(--bg-2);
-  padding: 16px;
-  border-radius: 24px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-  transition: box-shadow .3s;
-}
-.icon-bg img {
-  width: 48px; height: 48px;
-}
-.icon-item span {
-  margin-top: 8px;
+.logo span {
   display: block;
-  font-weight: 600;
-  font-size: 14px;
+  font-size: 1rem;
+  font-weight: 400;
 }
-/* Hover épico */
-.icon-item:hover .icon-bg {
-  box-shadow: 0 0 16px var(--accent), 0 0 32px var(--accent);
-  animation: pulseShadow 1.5s infinite alternate;
+.menu-btn {
+  background: none;
+  border: 2px solid var(--blue);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform var(--transition);
 }
-@keyframes pulseShadow {
-  from { box-shadow: 0 0 16px var(--accent), 0 0 32px var(--accent); }
-  to   { box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent); }
+.menu-btn svg {
+  width: 24px;
+  height: 24px;
+  color: var(--white);
 }
-.tagline {
-  margin-top: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--accent);
-  opacity: 0;
-}
-
-/* Ripple */
-.ripple { 
-  position:absolute; 
-  border-radius:50%; 
-  transform:scale(0); 
-  background:rgba(255,255,255,0.4); 
-  animation:rippleEffect 0.6s linear; 
-}
-@keyframes rippleEffect { 
-  to{transform:scale(4);opacity:0} 
+.menu-btn:hover {
+  transform: scale(1.2);
 }
 
-/* Modal Afiliados */
-.afiliados-modal {
-  display: none;
-  position: fixed; z-index: 10000; left: 0; top: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(10,10,13,0.92);
-  align-items: center; justify-content: center;
+/* ————— Grid ————— */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
-.afiliados-content {
-  background: var(--bg-2);
-  padding: 32px 24px;
-  border-radius: 18px;
-  max-width: 600px;
-  width: 90vw;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  position: relative;
-  color: var(--light);
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--blue);
+  border-radius: 8px;
+  padding: 0.75rem;
   text-align: center;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
 }
-.afiliados-close {
-  position: absolute; top: 16px; right: 20px;
-  font-size: 2rem; cursor: pointer; color: var(--accent);
+.card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 12px var(--blue);
+  transform: translateY(-4px);
 }
-.afiliados-grid {
-  display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-top: 24px;
+.card .icon,
+.card .icon-text {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+  color: var(--blue);
 }
-.afiliado-card {
-  background: var(--bg-1);
-  border-radius: 12px;
-  padding: 18px 12px;
-  width: 160px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  display: flex; flex-direction: column; align-items: center;
+.card.tow .icon {
+  color: orange;
 }
-.afiliado-card img {
-  width: 64px; height: 64px; object-fit: contain; margin-bottom: 10px;
-  background: #fff; border-radius: 8px; padding: 4px;
+.card p {
+  font-size: 0.85rem;
 }
-.afiliado-card h3 {
-  font-size: 1.1rem; margin-bottom: 8px; color: var(--accent);
+.card.important {
+  border-color: var(--green);
 }
-.afiliado-card a {
-  color: var(--accent); text-decoration: none; font-size: 0.95rem; margin: 2px 0;
-  transition: text-decoration .2s;
+.card.important:hover {
+  box-shadow: 0 0 16px var(--green);
 }
-.afiliado-card a:hover { text-decoration: underline; }
+.card.important .icon,
+.card.important p {
+  color: var(--green);
+}
 
-@media (max-width:600px){
-  .icon-bg{padding:12px}
-  .icon-bg img{width:32px;height:32px;}
-  .icon-item span{font-size:12px}
-  .logo img{max-width:140px}
-  .afiliados-content { padding: 16px 4px; }
-  .afiliado-card { width: 120px; padding: 10px 4px; }
-  .afiliado-card img { width: 48px; height: 48px; }
+/* ————— Botón aceite ————— */
+.oil-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--green);
+  border-radius: 8px;
+  background: none;
+  color: var(--white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+  margin-bottom: 1rem;
+}
+.oil-btn:hover {
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+  transform: scale(1.02);
+}
+
+/* ————— Modal ————— */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+.hidden {
+  display: none;
+}
+.modal-content {
+  background: var(--navy);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 320px;
+  position: relative;
+  animation: slideIn 0.3s ease;
+}
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--white);
+  cursor: pointer;
+}
+.modal-content h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+.modal-content label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.submit-btn {
+  width: 100%;
+  padding: 0.6rem;
+  background: var(--green);
+  border: none;
+  border-radius: 6px;
+  color: var(--navy);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.submit-btn:hover {
+  background: #28b467;
+}
+
+/* ————— Footer ————— */
+.footer {
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+/* ————— Animaciones ————— */
+@keyframes slideIn {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

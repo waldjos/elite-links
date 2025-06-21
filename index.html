@@ -1,449 +1,198 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Elite Aliados Loyal – Enlaces Épicos</title>
-
-  <!-- Fuentes y librerías -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <!-- Ionicons -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <!-- Vanilla Tilt -->
-  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
-  <!-- Particles.js -->
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-  <style>
-    :root {
-      --bg-1: #0a0a0d;
-      --bg-2: #1a1a29;
-      --accent: #00e5ff;
-      --text-light: #ffffff;
-      --text-dark: #333333;
-    }
-    body.light-mode {
-      --bg-1: #f5f5f7;
-      --bg-2: #ffffff;
-      --accent: #005b96;
-      --text-light: #333333;
-      --text-dark: #1a1a29;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
-
-    /* Preloader */
-    #preloader {
-      position: fixed; inset: 0;
-      background: var(--bg-1);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 9999;
-    }
-    #preloader .spinner {
-      width: 60px; height: 60px;
-      border: 6px solid var(--bg-2);
-      border-top: 6px solid var(--accent);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--bg-1);
-      color: var(--text-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-      transition: background .3s;
-    }
-    .animated-bg {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(45deg, var(--bg-1), var(--bg-2), var(--bg-1));
-      background-size: 600% 600%;
-      animation: gradientShift 15s ease infinite;
-      z-index: -3;
-    }
-    @keyframes gradientShift {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    #particles-js {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -2;
-    }
-
-    .container {
-      text-align: center;
-      z-index: 1;
-      padding: 20px;
-      width: 100%; max-width: 500px;
-    }
-    #theme-toggle {
-      position: fixed; top: 20px; right: 20px;
-      background: var(--bg-2);
-      border: none; border-radius: 50%;
-      width: 40px; height: 40px;
-      font-size: 18px; cursor: pointer;
-      color: var(--text-light);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform .2s;
-      z-index: 2;
-    }
-    #theme-toggle:active { transform: scale(0.9); }
-
-    /* Logo con brillo */
-    .logo { position: relative; overflow: hidden; margin-bottom: 10px; opacity: 0; }
-    .logo img {
-      max-width: 180px;
-      filter: drop-shadow(0 0 8px var(--accent));
-      transition: filter .3s;
-    }
-    .logo::after {
-      content: "";
-      position: absolute; top: -100%; left: -75%;
-      width: 50%; height: 300%;
-      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%);
-      transform: rotate(25deg);
-      animation: shine 2s infinite;
-    }
-    @keyframes shine {0%{left:-75%}100%{left:125%}}
-    body.light-mode .logo img { filter: brightness(0) invert(1) drop-shadow(0 0 8px var(--accent)); }
-
-    /* Lema dinámico */
-    .tagline {
-      margin-bottom: 30px;
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--accent);
-      opacity: 0;
-      transition: color .3s;
-    }
-
-    /* Grid de iconos */
-    .icon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 24px; opacity: 0; }
-    .icon-item {
-      text-decoration: none;
-      color: var(--text-light);
-      display: flex; flex-direction: column; align-items: center;
-      position: relative; outline: none;
-      transition: transform 0.8s cubic-bezier(.03,.98,.52,.99);
-    }
-    .icon-bg {
-      background: var(--bg-2);
-      padding: 16px; border-radius: 24px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      transition: box-shadow .3s;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-    }
-    .icon-bg ion-icon { font-size: 2.5rem; color: var(--accent); }
-    .icon-item span { margin-top: 8px; font-weight:600; font-size:14px; }
-
-    /* Hover: partículas + bounce */
-    .icon-item:hover {
-      transform: scale(1.05);
-    }
-    .icon-item:hover .icon-bg {
-      animation: bounceHover 0.6s;
-      box-shadow: 0 0 16px var(--accent), 0 0 32px var(--accent);
-    }
-    @keyframes bounceHover {0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
-
-    /* Ripple */
-    .ripple { position:absolute; border-radius:50%; transform:scale(0); background:rgba(255,255,255,0.4); animation:rippleEffect 0.6s linear; }
-    @keyframes rippleEffect { to{transform:scale(4);opacity:0} }
-
-    /* Modal Afiliados */
-    .afiliados-modal {
-      display: none;
-      position: fixed; z-index: 10000; left: 0; top: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(10,10,13,0.92);
-      align-items: center; justify-content: center;
-    }
-    .afiliados-content {
-      background: var(--bg-2);
-      padding: 32px 24px;
-      border-radius: 18px;
-      max-width: 600px;
-      width: 90vw;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      position: relative;
-      color: var(--text-light);
-      text-align: center;
-    }
-    .afiliados-close {
-      position: absolute; top: 16px; right: 20px;
-      font-size: 2rem; cursor: pointer; color: var(--accent);
-    }
-    .afiliados-grid {
-      display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-top: 24px;
-    }
-    .afiliado-card {
-      background: var(--bg-1);
-      border-radius: 12px;
-      padding: 18px 12px;
-      width: 160px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-      display: flex; flex-direction: column; align-items: center;
-    }
-    .afiliado-card img {
-      width: 64px; height: 64px; object-fit: contain; margin-bottom: 10px;
-      background: #fff; border-radius: 8px; padding: 4px;
-    }
-    .afiliado-card h3 {
-      font-size: 1.1rem; margin-bottom: 8px; color: var(--accent);
-    }
-    .afiliado-card a {
-      color: var(--accent); text-decoration: none; font-size: 0.95rem; margin: 2px 0;
-      transition: text-decoration .2s;
-    }
-    .afiliado-card a:hover { text-decoration: underline; }
-    @media (max-width:600px){
-      .icon-bg{padding:12px}
-      .icon-bg ion-icon{font-size:2rem}
-      .icon-item span{font-size:12px}
-      .logo img{max-width:140px}
-      .afiliados-content { padding: 16px 4px; }
-      .afiliado-card { width: 120px; padding: 10px 4px; }
-      .afiliado-card img { width: 48px; height: 48px; }
-    }
-    /* Modal Imagen Promoción */
-    #img-modal {
-      display: none;
-      position: fixed;
-      z-index: 20000;
-      left: 0; top: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(10,10,13,0.95);
-      align-items: center; justify-content: center;
-    }
-    #img-modal img {
-      max-width: 90vw;
-      max-height: 80vh;
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
-      background: #fff;
-      padding: 8px;
-      display: block;
-      margin: auto;
-    }
-    #img-modal-close {
-      position: absolute;
-      top: 24px;
-      right: 40px;
-      font-size: 2.5rem;
-      color: var(--accent);
-      cursor: pointer;
-      z-index: 2;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Elite Aliados Loyal</title>
+  <!-- Fuente corporativa -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet"/>
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <!-- Preloader -->
-  <div id="preloader"><div class="spinner"></div></div>
+  <div class="app">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo">
+        <!-- Ícono Wi-Fi -->
+        <svg class="wifi-icon" viewBox="0 0 24 24">
+          <path d="M12 18c.828 0 1.5.672 1.5 1.5S12.828 21 12 21s-1.5-.672-1.5-1.5S11.172 18 12 18zm4.243-2.757a6 6 0 0 0-8.486 0 .75.75 0 1 1-1.06-1.06 7.5 7.5 0 0 1 10.606 0 .75.75 0 1 1-1.06 1.06zm2.121-2.122a10 10 0 0 0-14.142 0 .75.75 0 0 1-1.06-1.06 11.5 11.5 0 0 1 16.263 0 .75.75 0 0 1-1.06 1.06z" fill="currentColor"/>
+        </svg>
+        <!-- Ícono coche -->
+        <svg class="car-icon" viewBox="0 0 64 32">
+          <path d="M2 20 L10 8 H54 L62 20 V28 H2 Z M12 28 A4 4 0 1 0 12 20 A4 4 0 1 0 12 28 Z M52 28 A4 4 0 1 0 52 20 A4 4 0 1 0 52 28 Z" fill="currentColor"/>
+        </svg>
+        <h1>ELITE<br/><span>ALIADOS LOYAL</span></h1>
+      </div>
+      <button class="menu-btn" aria-label="Menú">
+        <svg viewBox="0 0 24 24">
+          <rect y="4"  width="24" height="2" rx="1" fill="currentColor"/>
+          <rect y="11" width="24" height="2" rx="1" fill="currentColor"/>
+          <rect y="18" width="24" height="2" rx="1" fill="currentColor"/>
+        </svg>
+      </button>
+    </header>
 
-  <!-- Animaciones de fondo -->
-  <div class="animated-bg"></div>
-  <div id="particles-js"></div>
-  <button id="theme-toggle">🌙</button>
+    <!-- GRID 3×3 DE TARJETAS -->
+    <section class="grid">
+      <div class="card" data-action="copy-code">
+        <div class="icon-text">0007</div>
+        <p>Código de Pantalla</p>
+      </div>
+      <div class="card" data-action="contact-mail">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M12 12a2 2 0 1 0-2-2 2 2 0 0 0 2 2zm0 2c-2.21 0-6 1.105-6 3.315V18h12v-.685C18 15.105 14.21 14 12 14z" fill="currentColor"/>
+        </svg>
+        <p>Contacto Elite</p>
+      </div>
+      <div class="card" data-action="diagram-url">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M4 10h4v10H4zm6-4h4v14h-4zm6 8h4v6h-4z" fill="currentColor"/>
+        </svg>
+        <p>Diagrama de Negocios</p>
+      </div>
+      <div class="card" data-action="call-tow">
+        <svg class="icon tow" viewBox="0 0 24 24">
+          <path d="M2 16h2l2-6h12l2 6h2v4h-2a2 2 0 1 1-4 0H8a2 2 0 1 1-4 0H2zm4-4l-1.5 4h3L6 12z" fill="currentColor"/>
+        </svg>
+        <p>Solicitud de Central de Grúa</p>
+      </div>
+      <div class="card" data-action="call-911">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M6 2l2 8h8l2-8H6zm-2 10h16v8H4zm6 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" fill="currentColor"/>
+        </svg>
+        <p>911 / Bomberos FNC</p>
+      </div>
+      <div class="card" data-action="show-affiliates">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M12 2a10 10 0 0 0-7.071 17.071A10 10 0 1 0 12 2zm1 13h-2v-6h2zm0-8h-2V5h2z" fill="currentColor"/>
+        </svg>
+        <p>Afiliados</p>
+      </div>
+      <div class="card" data-action="open-repuestos">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M4 4h16v16H4zM6 6v12h12V6z" fill="currentColor"/>
+        </svg>
+        <p>Repuestos 24 horas</p>
+      </div>
+      <div class="card important" data-action="quote-policy">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M5 20h14l-2-8H7l-2 8zm2-10V6h10v4z" fill="currentColor"/>
+        </svg>
+        <p>Cotizar tu Póliza RCV</p>
+      </div>
+      <div class="card" data-action="open-promo">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M4 12l8-5 8 5-8 5z" fill="currentColor"/>
+        </svg>
+        <p>Promoción</p>
+      </div>
+    </section>
 
-  <div class="container">
-    <div class="logo"><img src="assets/ELITE_Elite_Logo_blanco_.png" alt="Elite Aliados Loyal"></div>
-    <div class="tagline"></div>
-    <div class="icon-grid">
-      <a href="https://maps.app.goo.gl/N4nTrHuqdBZx5vAW9" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="location-outline"></ion-icon></div><span>Dirección</span>
-      </a>
-      <a href="tel:+123456789" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="call-outline"></ion-icon></div><span>Teléfono</span>
-      </a>
-      <a href="https://www.instagram.com/elitealiadosloyal?utm_source=qr&igsh=cjd4dWsyY3MzdmYy" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="logo-instagram"></ion-icon></div><span>Instagram</span>
-      </a>
-      <a href="#" id="afiliados-btn" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="people-outline"></ion-icon></div><span>Afiliados</span>
-      </a>
-      <a href="http://wa.me/+584149208034" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="file-tray-full-outline"></ion-icon></div><span>Póliza RCV</span>
-      </a>
-      <a href="https://tu-sitio.com/poliza-grua" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="cube-outline"></ion-icon></div><span>Póliza Grua</span>
-      </a>
-      <a href="https://tu-sitio.com/cita-medica" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="medkit-outline"></ion-icon></div><span>Cita Médica</span>
-      </a>
-      <a href="https://tu-sitio.com/asesoria-juridica" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="clipboard-outline"></ion-icon></div><span>Asesoría Jurídica</span>
-      </a>
-      <a href="#" id="promociones-btn" class="icon-item" data-tilt>
-        <div class="icon-bg"><ion-icon name="pricetags-outline"></ion-icon></div><span>Promociones</span>
-      </a>
-    </div>
-  </div>
+    <!-- BOTÓN DE CAMBIO DE ACEITE -->
+    <button id="oilBtn" class="oil-btn">Próximo cambio de aceite</button>
 
-  <!-- Modal Afiliados -->
-  <div id="afiliados-modal" class="afiliados-modal">
-    <div class="afiliados-content">
-      <span class="afiliados-close" id="afiliados-close">&times;</span>
-      <h2>Afiliados</h2>
-      <div class="afiliados-grid">
-        <!-- Ejemplo de empresa afiliada -->
-        <div class="afiliado-card">
-          <img src="assets/afiliados/constructora.jpeg" alt="Empresa 1">
-          <h3>Constructora Ap Rascacielos C.A</h3>
-          <a href="https://wa.me/+584242610788" target="_blank">Contacto</a>
-          <a href="https://www.instagram.com/constructoraaprascacielos?igsh=MTI1ZGY5NzJlbThiYQ==" target="_blank">Instagram</a>
-          <a href="https://maps.app.goo.gl/Ehx9Xio31t2jxtHb9?g_st=aw" target="_blank">Ubicación</a>
-        </div>
-        <div class="afiliado-card">
-          <img src="assets/logo_empresa2.png" alt="Empresa 2">
-          <h3>Empresa 2</h3>
-          <a href="http://wa.me/+584129961799" target="_blank">Contacto</a>
-          <a href="https://maps.app.goo.gl/Ehx9Xio31t2jxtHb9?g_st=aw" target="_blank">Ubicación</a>
-        </div>
-        <!-- Agrega más empresas aquí -->
+    <!-- MODAL DE FORMULARIO -->
+    <div id="oilModal" class="modal hidden">
+      <div class="modal-content">
+        <button id="closeModal" class="close">&times;</button>
+        <h2>Próximo cambio de aceite</h2>
+        <form id="oilForm">
+          <label>
+            Fecha del cambio
+            <input type="date" id="changeDate" required/>
+          </label>
+          <label>
+            Kilometraje actual (km)
+            <input type="number" id="currentKm" placeholder="Km actual" required/>
+          </label>
+          <label>
+            Intervalo de cambio
+            <select id="interval" required>
+              <option value="5000">5 000 km</option>
+              <option value="7000">7 000 km</option>
+            </select>
+          </label>
+          <label>
+            Correo electrónico
+            <input type="email" id="email" placeholder="tú@dominio.com" required/>
+          </label>
+          <button type="submit" class="submit-btn">Aceptar</button>
+        </form>
       </div>
     </div>
-  </div>
-  <!-- Modal Promociones -->
-  <div id="promociones-modal" class="afiliados-modal">
-    <div class="afiliados-content">
-      <span class="afiliados-close" id="promociones-close">&times;</span>
-      <h2>Promociones</h2>
-      <div class="afiliados-grid">
-        <div class="afiliado-card">
-          <img src="assets/promociones/promo1.jpeg" alt="Promo 1" class="promo-img">
-        </div>
-        <div class="afiliado-card">
-          <img src="assets/promociones/promo2.jpeg" alt="Promo 2" class="promo-img">
-        </div>
-        <div class="afiliado-card">
-          <img src="assets/promociones/promo3.jpeg" alt="Promo 3" class="promo-img">
-        </div>
-        <div class="afiliado-card">
-          <img src="assets/promociones/promo4.jpeg" alt="Promo 4" class="promo-img">
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Modal Imagen Promoción -->
-  <div id="img-modal">
-    <span id="img-modal-close">&times;</span>
-    <img id="img-modal-src" src="" alt="Promoción">
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>NOS MOVEMOS CONTIGO,<br/>PRESENTE DONDE NOS NECESITES.</p>
+    </footer>
   </div>
 
+  <!-- SCRIPTS -->
   <script>
-    // Preloader
-    window.addEventListener('load',()=>{ gsap.to('#preloader',{opacity:0,duration:0.8,onComplete:()=>{document.getElementById('preloader').style.display='none';}}); });
-    // Partículas
-    particlesJS.load('particles-js','particles.json',null);
-    // Tilt 3D con gyroscope y sin glare
-    VanillaTilt.init(document.querySelectorAll('[data-tilt]'),{
-      max:15,
-      speed:1000,
-      easing:"cubic-bezier(.03,.98,.52,.99)",
-      glare:false,
-      scale:1.05,
-      gyroscope:true
-    });
-    // Lema rotatorio
-    const slogans=['Aliados en Movilidad','Tu Seguridad, Nuestra Prioridad','Cobertura Integral'];
-    const tagEl=document.querySelector('.tagline');let idx=0;
-    function changeTagline(){ gsap.to(tagEl,{opacity:0,duration:0.4,onComplete:()=>{tagEl.textContent=slogans[idx];idx=(idx+1)%slogans.length;gsap.to(tagEl,{opacity:1,duration:0.4});}}); }
-    tagEl.textContent=slogans[idx++]; setTimeout(changeTagline,0); setInterval(changeTagline,4000);
-    // Entrada
-    const tl=gsap.timeline({defaults:{ease:'power2.out'}});
-    tl.to('.logo',{opacity:1,y:-20,duration:1.2})
-      .to('.icon-grid',{opacity:1,duration:0.6},'-=0.6')
-      .from('.icon-item',{y:40,opacity:0,stagger:0.15,duration:0.6},'-=0.4')
-      .to('.tagline',{opacity:1,y:-10,duration:0.8},'-=0.4');
-    // Hover partículas + bounce + sonido + ripple
-    document.querySelectorAll('.icon-item').forEach(item=>{
-      item.addEventListener('mouseenter',e=>{
-        const p=window.pJSDom&&window.pJSDom[0].pJS; if(p) p.fn.interactivity.modes.pushParticles(10,{x:e.clientX,y:e.clientY});
-        gsap.fromTo(item.querySelector('.icon-bg'),{scale:1},{scale:1.1,duration:0.3,ease:'bounce.out'});
-      });
-      item.addEventListener('click',e=>{
-        // sonido
-        const ctx=new AudioContext(),o=ctx.createOscillator();o.type='sine';o.frequency.value=300;o.connect(ctx.destination);o.start();o.stop(ctx.currentTime+0.1);
-        // ripple
-        const bg=item.querySelector('.icon-bg'),r=bg.getBoundingClientRect(),d=Math.max(r.width,r.height),span=document.createElement('span');
-        span.classList.add('ripple');span.style.width=span.style.height=d+'px';
-        span.style.left=(e.clientX-r.left-d/2)+'px';span.style.top=(e.clientY-r.top-d/2)+'px';bg.appendChild(span);
-        setTimeout(()=>span.remove(),600);
-      });
-    });
-    // Toggle
-    const btn=document.getElementById('theme-toggle');btn.addEventListener('click',()=>{document.body.classList.toggle('light-mode');btn.textContent=document.body.classList.contains('light-mode')?'🌞':'🌙';});
+    // ===== Modal Cambio de Aceite =====
+    const oilBtn    = document.getElementById("oilBtn");
+    const modal     = document.getElementById("oilModal");
+    const closeBtn  = document.getElementById("closeModal");
+    const oilForm   = document.getElementById("oilForm");
 
-    // Modal Afiliados
-    const afiliadosBtn = document.getElementById('afiliados-btn');
-    const afiliadosModal = document.getElementById('afiliados-modal');
-    const afiliadosClose = document.getElementById('afiliados-close');
+    oilBtn.addEventListener("click", () => modal.classList.remove("hidden"));
+    closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+    window.addEventListener("click", e => { if(e.target===modal) modal.classList.add("hidden"); });
 
-    afiliadosBtn.addEventListener('click', function(e) {
+    oilForm.addEventListener("submit", e => {
       e.preventDefault();
-      afiliadosModal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
+      const date     = document.getElementById("changeDate").value;
+      const km       = parseInt(document.getElementById("currentKm").value, 10);
+      const interval = parseInt(document.getElementById("interval").value, 10);
+      const email    = encodeURIComponent(document.getElementById("email").value);
+      const nextKm   = km + interval;
+      const subject  = encodeURIComponent("Registro cambio de aceite");
+      const body     = encodeURIComponent(
+        `Fecha del cambio: ${date}\nKilometraje actual: ${km} km\nIntervalo: ${interval} km\nPróximo cambio en: ${nextKm} km`
+      );
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
     });
-    afiliadosClose.addEventListener('click', function() {
-      afiliadosModal.style.display = 'none';
-      document.body.style.overflow = '';
-    });
-    window.addEventListener('click', function(e) {
-      if (e.target === afiliadosModal) {
-        afiliadosModal.style.display = 'none';
-        document.body.style.overflow = '';
+
+    // ===== Acciones de las tarjetas =====
+    const actions = {
+      "copy-code": () => {
+        const code = "0007";
+        navigator.clipboard.writeText(code)
+          .then(() => alert(`Código copiado: ${code}`))
+          .catch(() => alert("Error al copiar código"));
+      },
+      "contact-mail": () => {
+        window.location.href = "mailto:atencion.cliente@eliteloayl.com";
+      },
+      "diagram-url": () => {
+        window.open("https://tudominio.com/diagrama.pdf", "_blank");
+      },
+      "call-tow": () => {
+        window.location.href = "tel:+5804129999999";
+      },
+      "call-911": () => {
+        window.location.href = "tel:911";
+      },
+      "show-affiliates": () => {
+        alert("Aquí se mostraría la lista de afiliados.");
+      },
+      "open-repuestos": () => {
+        window.open("https://tudominio.com/repuestos", "_blank");
+      },
+      "quote-policy": () => {
+        window.open("https://tudominio.com/cotizar", "_blank");
+      },
+      "open-promo": () => {
+        window.open("https://tudominio.com/promociones", "_blank");
       }
-    });
+    };
 
-    // Modal Promociones
-    const promocionesBtn = document.getElementById('promociones-btn');
-    const promocionesModal = document.getElementById('promociones-modal');
-    const promocionesClose = document.getElementById('promociones-close');
-
-    promocionesBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      promocionesModal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    });
-    promocionesClose.addEventListener('click', function() {
-      promocionesModal.style.display = 'none';
-      document.body.style.overflow = '';
-    });
-    window.addEventListener('click', function(e) {
-      if (e.target === promocionesModal) {
-        promocionesModal.style.display = 'none';
-        document.body.style.overflow = '';
-      }
-    });
-
-    // Modal Imagen Promoción
-    const imgModal = document.getElementById('img-modal');
-    const imgModalSrc = document.getElementById('img-modal-src');
-    const imgModalClose = document.getElementById('img-modal-close');
-    document.querySelectorAll('.promo-img').forEach(img => {
-      img.style.cursor = 'zoom-in';
-      img.addEventListener('click', function() {
-        imgModalSrc.src = this.src;
-        imgModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      });
-    });
-    imgModalClose.addEventListener('click', function() {
-      imgModal.style.display = 'none';
-      document.body.style.overflow = '';
-    });
-    imgModal.addEventListener('click', function(e) {
-      if (e.target === imgModal) {
-        imgModal.style.display = 'none';
-        document.body.style.overflow = '';
+    document.querySelectorAll(".card").forEach(card => {
+      const act = card.getAttribute("data-action");
+      if (actions[act]) {
+        card.style.cursor = "pointer";
+        card.addEventListener("click", actions[act]);
       }
     });
   </script>
