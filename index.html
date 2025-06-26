@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Elite Aliados Loyal</title>
   <!-- Fuente corporativa -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
   <!-- Estilos -->
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -14,83 +17,64 @@
     <!-- HEADER -->
     <header class="header">
       <div class="logo">
-        <!-- Ícono Wi-Fi -->
-        <svg class="wifi-icon" viewBox="0 0 24 24">
-          <path d="M12 18c.828 0 1.5.672 1.5 1.5S12.828 21 12 21s-1.5-.672-1.5-1.5S11.172 18 12 18zm4.243-2.757a6 6 0 0 0-8.486 0 .75.75 0 1 1-1.06-1.06 7.5 7.5 0 0 1 10.606 0 .75.75 0 1 1-1.06 1.06zm2.121-2.122a10 10 0 0 0-14.142 0 .75.75 0 0 1-1.06-1.06 11.5 11.5 0 0 1 16.263 0 .75.75 0 0 1-1.06 1.06z" fill="currentColor"/>
-        </svg>
-        <!-- Ícono coche -->
-        <svg class="car-icon" viewBox="0 0 64 32">
-          <path d="M2 20 L10 8 H54 L62 20 V28 H2 Z M12 28 A4 4 0 1 0 12 20 A4 4 0 1 0 12 28 Z M52 28 A4 4 0 1 0 52 20 A4 4 0 1 0 52 28 Z" fill="currentColor"/>
-        </svg>
-        <h1>ELITE<br/><span>ALIADOS LOYAL</span></h1>
+        <!-- Wi-Fi -->
+        <div class="icon" style="background-image:url('assets/iconos/wifi.svg');"></div>
+        <!-- Coche -->
+        <div class="icon" style="background-image:url('assets/iconos/car.svg');"></div>
+        <h1>
+          ELITE<br />
+          <span>ALIADOS LOYAL</span>
+        </h1>
       </div>
       <button class="menu-btn" aria-label="Menú">
-        <svg viewBox="0 0 24 24">
-          <rect y="4"  width="24" height="2" rx="1" fill="currentColor"/>
-          <rect y="11" width="24" height="2" rx="1" fill="currentColor"/>
-          <rect y="18" width="24" height="2" rx="1" fill="currentColor"/>
-        </svg>
+        <div class="icon" style="background-image:url('assets/iconos/bars.svg');"></div>
       </button>
     </header>
 
     <!-- GRID 3×3 DE TARJETAS -->
     <section class="grid">
       <div class="card" data-action="copy-code">
-        <div class="icon-text">0007</div>
+        <div class="icon" style="background-image:url('assets/iconos/id-badge.svg');"></div>
         <p>Código de Pantalla</p>
       </div>
       <div class="card" data-action="contact-mail">
-        <svg class="icon" viewBox="0 0 24 24">
-          <path d="M12 12a2 2 0 1 0-2-2 2 2 0 0 0 2 2zm0 2c-2.21 0-6 1.105-6 3.315V18h12v-.685C18 15.105 14.21 14 12 14z" fill="currentColor"/>
-        </svg>
+        <div class="icon" style="background-image:url('assets/iconos/at.svg');"></div>
         <p>Contacto Elite</p>
       </div>
       <div class="card" data-action="diagram-url">
-        <svg class="icon" viewBox="0 0 24 24">
-          <path d="M4 10h4v10H4zm6-4h4v14h-4zm6 8h4v6h-4z" fill="currentColor"/>
-        </svg>
+        <div class="icon" style="background-image:url('assets/iconos/chart-bar.svg');"></div>
         <p>Diagrama de Negocios</p>
       </div>
       <div class="card" data-action="call-tow">
-        <svg class="icon tow" viewBox="0 0 24 24">
-          <path d="M2 16h2l2-6h12l2 6h2v4h-2a2 2 0 1 1-4 0H8a2 2 0 1 1-4 0H2zm4-4l-1.5 4h3L6 12z" fill="currentColor"/>
-        </svg>
+        <div class="icon" style="background-image:url('assets/iconos/tow-truck.svg');"></div>
         <p>Solicitud de Central de Grúa</p>
       </div>
       <div class="card" data-action="call-911">
-        <svg class="icon" viewBox="0 0 24 24">
-          <path d="M6 2l2 8h8l2-8H6zm-2 10h16v8H4zm6 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" fill="currentColor"/>
-        </svg>
+        <div class="icon" style="background-image:url('assets/iconos/phone.svg');"></div>
         <p>911 / Bomberos FNC</p>
       </div>
       <div class="card" data-action="show-affiliates">
-        <svg class="icon" viewBox="0 0 24 24">
-          <path d="M12 2a10 10 0 0 0-7.071 17.071A10 10 0 1 0 12 2zm1 13h-2v-6h2zm0-8h-2V5h2z" fill="currentColor"/>
-        </svg>
+        <div class="icon" style="background-image:url('assets/iconos/users.svg');"></div>
         <p>Afiliados</p>
       </div>
       <div class="card" data-action="open-repuestos">
-        <svg class="icon" viewBox="0 0 24 24">
-          <path d="M4 4h16v16H4zM6 6v12h12V6z" fill="currentColor"/>
-        </svg>
+        <div class="icon" style="background-image:url('assets/iconos/box-open.svg');"></div>
         <p>Repuestos 24 horas</p>
       </div>
       <div class="card important" data-action="quote-policy">
-        <svg class="icon" viewBox="0 0 24 24">
-          <path d="M5 20h14l-2-8H7l-2 8zm2-10V6h10v4z" fill="currentColor"/>
-        </svg>
+        <div class="icon" style="background-image:url('assets/iconos/car-side.svg');"></div>
         <p>Cotizar tu Póliza RCV</p>
       </div>
       <div class="card" data-action="open-promo">
-        <svg class="icon" viewBox="0 0 24 24">
-          <path d="M4 12l8-5 8 5-8 5z" fill="currentColor"/>
-        </svg>
+        <div class="icon" style="background-image:url('assets/iconos/bullhorn.svg');"></div>
         <p>Promoción</p>
       </div>
     </section>
 
     <!-- BOTÓN DE CAMBIO DE ACEITE -->
-    <button id="oilBtn" class="oil-btn">Próximo cambio de aceite</button>
+    <button id="oilBtn" class="oil-btn">
+      Próximo cambio de aceite
+    </button>
 
     <!-- MODAL DE FORMULARIO -->
     <div id="oilModal" class="modal hidden">
@@ -124,77 +108,14 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-      <p>NOS MOVEMOS CONTIGO,<br/>PRESENTE DONDE NOS NECESITES.</p>
+      <p>
+        NOS MOVEMOS CONTIGO,<br/>
+        PRESENTE DONDE NOS NECESITES.
+      </p>
     </footer>
   </div>
 
   <!-- SCRIPTS -->
-  <script>
-    // ===== Modal Cambio de Aceite =====
-    const oilBtn    = document.getElementById("oilBtn");
-    const modal     = document.getElementById("oilModal");
-    const closeBtn  = document.getElementById("closeModal");
-    const oilForm   = document.getElementById("oilForm");
-
-    oilBtn.addEventListener("click", () => modal.classList.remove("hidden"));
-    closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
-    window.addEventListener("click", e => { if(e.target===modal) modal.classList.add("hidden"); });
-
-    oilForm.addEventListener("submit", e => {
-      e.preventDefault();
-      const date     = document.getElementById("changeDate").value;
-      const km       = parseInt(document.getElementById("currentKm").value, 10);
-      const interval = parseInt(document.getElementById("interval").value, 10);
-      const email    = encodeURIComponent(document.getElementById("email").value);
-      const nextKm   = km + interval;
-      const subject  = encodeURIComponent("Registro cambio de aceite");
-      const body     = encodeURIComponent(
-        `Fecha del cambio: ${date}\nKilometraje actual: ${km} km\nIntervalo: ${interval} km\nPróximo cambio en: ${nextKm} km`
-      );
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-    });
-
-    // ===== Acciones de las tarjetas =====
-    const actions = {
-      "copy-code": () => {
-        const code = "0007";
-        navigator.clipboard.writeText(code)
-          .then(() => alert(`Código copiado: ${code}`))
-          .catch(() => alert("Error al copiar código"));
-      },
-      "contact-mail": () => {
-        window.location.href = "mailto:atencion.cliente@eliteloayl.com";
-      },
-      "diagram-url": () => {
-        window.open("https://tudominio.com/diagrama.pdf", "_blank");
-      },
-      "call-tow": () => {
-        window.location.href = "tel:+5804129999999";
-      },
-      "call-911": () => {
-        window.location.href = "tel:911";
-      },
-      "show-affiliates": () => {
-        alert("Aquí se mostraría la lista de afiliados.");
-      },
-      "open-repuestos": () => {
-        window.open("https://tudominio.com/repuestos", "_blank");
-      },
-      "quote-policy": () => {
-        window.open("https://tudominio.com/cotizar", "_blank");
-      },
-      "open-promo": () => {
-        window.open("https://tudominio.com/promociones", "_blank");
-      }
-    };
-
-    document.querySelectorAll(".card").forEach(card => {
-      const act = card.getAttribute("data-action");
-      if (actions[act]) {
-        card.style.cursor = "pointer";
-        card.addEventListener("click", actions[act]);
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
