@@ -1,121 +1,495 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Elite Aliados Loyal</title>
-  <!-- Fuente corporativa -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
-  <!-- Estilos -->
-  <link rel="stylesheet" href="./styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elite Aliados Loyalgggg</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+
+  <!-- Fuentes y librerías -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- Vanilla Tilt -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+  <style>
+    :root {
+      --bg-1: #0a0a0d;
+      --bg-2: #1a1a29;
+      --accent: #00e5ff;
+      --text-light: #ffffff;
+      --text-dark: #333333;
+    }
+    body.light-mode {
+      --bg-1: #f5f5f7;
+      --bg-2: #ffffff;
+      --accent: #005b96;
+      --text-light: #333333;
+      --text-dark: #1a1a29;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    /* Preloader */
+    #preloader {
+      position: fixed; inset: 0;
+      background: var(--bg-1);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+    }
+    #preloader .spinner {
+      width: 60px; height: 60px;
+      border: 6px solid var(--bg-2);
+      border-top: 6px solid var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg-1);
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      transition: background .3s;
+    }
+    .animated-bg {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(45deg, var(--bg-1), var(--bg-2), var(--bg-1));
+      background-size: 600% 600%;
+      animation: gradientShift 15s ease infinite;
+      z-index: -3;
+    }
+    @keyframes gradientShift {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    #particles-js {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+    }
+
+    .container {
+      text-align: center;
+      z-index: 1;
+      padding: 20px;
+      width: 100%; max-width: 500px;
+    }
+    #theme-toggle {
+      position: fixed; top: 20px; right: 20px;
+      background: var(--bg-2);
+      border: none; border-radius: 50%;
+      width: 40px; height: 40px;
+      font-size: 18px; cursor: pointer;
+      color: var(--text-light);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform .2s;
+      z-index: 2;
+    }
+    #theme-toggle:active { transform: scale(0.9); }
+
+    /* Logo con brillo */
+    .logo { position: relative; overflow: hidden; margin-bottom: 10px; opacity: 0; }
+    .logo img {
+      max-width: 180px;
+      filter: drop-shadow(0 0 8px var(--accent));
+      transition: filter .3s;
+    }
+    .logo::after {
+      content: "";
+      position: absolute; top: -100%; left: -75%;
+      width: 50%; height: 300%;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%);
+      transform: rotate(25deg);
+      animation: shine 2s infinite;
+    }
+    @keyframes shine {0%{left:-75%}100%{left:125%}}
+    body.light-mode .logo img { filter: brightness(0) invert(1) drop-shadow(0 0 8px var(--accent)); }
+
+    /* Lema dinámico */
+    .tagline {
+      margin-bottom: 30px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--accent);
+      opacity: 0;
+      transition: color .3s;
+    }
+
+    /* Grid de iconos */
+    .icon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 24px; opacity: 0; }
+    .icon-item {
+      text-decoration: none;
+      color: var(--text-light);
+      display: flex; flex-direction: column; align-items: center;
+      position: relative; outline: none;
+      transition: transform 0.8s cubic-bezier(.03,.98,.52,.99);
+    }
+    .icon-bg {
+      background: var(--bg-2);
+      padding: 16px; border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      transition: box-shadow .3s;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .icon-bg ion-icon { font-size: 2.5rem; color: var(--accent); }
+    .icon-item span { margin-top: 8px; font-weight:600; font-size:14px; }
+
+    /* Hover: partículas + bounce */
+    .icon-item:hover {
+      transform: scale(1.05);
+    }
+    .icon-item:hover .icon-bg {
+      animation: bounceHover 0.6s;
+      box-shadow: 0 0 16px var(--accent), 0 0 32px var(--accent);
+    }
+    @keyframes bounceHover {0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+
+    /* Ripple */
+    .ripple { position:absolute; border-radius:50%; transform:scale(0); background:rgba(255,255,255,0.4); animation:rippleEffect 0.6s linear; }
+    @keyframes rippleEffect { to{transform:scale(4);opacity:0} }
+
+    /* Modal Afiliados */
+    .afiliados-modal {
+      display: none;
+      position: fixed; z-index: 10000; left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(10,10,13,0.92);
+      align-items: center; justify-content: center;
+    }
+    .afiliados-content {
+      background: var(--bg-2);
+      padding: 32px 24px;
+      border-radius: 18px;
+      max-width: 600px;
+      width: 90vw;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      position: relative;
+      color: var(--text-light);
+      text-align: center;
+    }
+    .afiliados-close {
+      position: absolute; top: 16px; right: 20px;
+      font-size: 2rem; cursor: pointer; color: var(--accent);
+    }
+    .afiliados-grid {
+      display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-top: 24px;
+    }
+    .afiliado-card {
+      background: var(--bg-1);
+      border-radius: 12px;
+      padding: 18px 12px;
+      width: 160px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .afiliado-card img {
+      width: 64px; height: 64px; object-fit: contain; margin-bottom: 10px;
+      background: #fff; border-radius: 8px; padding: 4px;
+    }
+    .afiliado-card h3 {
+      font-size: 1.1rem; margin-bottom: 8px; color: var(--accent);
+    }
+    .afiliado-card a {
+      color: var(--accent); text-decoration: none; font-size: 0.95rem; margin: 2px 0;
+      transition: text-decoration .2s;
+    }
+    .afiliado-card a:hover { text-decoration: underline; }
+    @media (max-width:600px){
+      .icon-bg{padding:12px}
+      .icon-bg ion-icon{font-size:2rem}
+      .icon-item span{font-size:12px}
+      .logo img{max-width:140px}
+      .afiliados-content { padding: 16px 4px; }
+      .afiliado-card { width: 120px; padding: 10px 4px; }
+      .afiliado-card img { width: 48px; height: 48px; }
+    }
+    /* Modal Imagen Promoción */
+    #img-modal {
+      display: none;
+      position: fixed;
+      z-index: 20000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(10,10,13,0.95);
+      align-items: center; justify-content: center;
+    }
+    #img-modal img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+      background: #fff;
+      padding: 8px;
+      display: block;
+      margin: auto;
+    }
+    #img-modal-close {
+      position: absolute;
+      top: 24px;
+      right: 40px;
+      font-size: 2.5rem;
+      color: var(--accent);
+      cursor: pointer;
+      z-index: 2;
+    }
+  </style>
 </head>
 <body>
-  <div class="app">
-    <!-- HEADER -->
-    <header class="header">
-      <div class="logo">
-        <!-- Wi-Fi -->
-        <div class="icon" style="background-image:url('assets/iconos/wifi.svg');"></div>
-        <!-- Coche -->
-        <div class="icon" style="background-image:url('assets/iconos/car.svg');"></div>
-        <h1>
-          ELITE<br />
-          <span>ALIADOS LOYAL</span>
-        </h1>
+  <!-- Preloader -->
+  <div id="preloader"><div class="spinner"></div></div>
+
+  <!-- Animaciones de fondo -->
+  <div class="animated-bg"></div>
+  <div id="particles-js"></div>
+  <button id="theme-toggle">🌙</button>
+
+  <div class="main-container">
+    <header class="elite-header">
+      <div class="elite-logo-group">
+        <img src="icons/wifi.svg" alt="wifi" class="elite-wifi">
+        <div class="elite-logo-text">
+          <img src="assets/ELITE_Elite_Logo_blanco_.png" alt="Elite Logo" class="elite-logo">
+          <div class="elite-sub">ALIADOS LOYAL</div>
+        </div>
+        <img src="icons/menu.svg" alt="menu" class="elite-menu">
       </div>
-      <button class="menu-btn" aria-label="Menú">
-        <div class="icon" style="background-image:url('assets/iconos/bars.svg');"></div>
-      </button>
+      <div class="elite-car">
+        <span class="elite-sutdestb">SUTDESTB</span>
+      </div>
     </header>
-
-    <!-- GRID 3×3 DE TARJETAS -->
-    <section class="grid">
-      <div class="card" data-action="copy-code">
-        <div class="icon" style="background-image:url('assets/iconos/id-badge.svg');"></div>
-        <p>Código de Pantalla</p>
+    <main>
+      <div class="elite-grid">
+        <a class="elite-btn" href="https://wa.me/584149208034?text=Hola%20Elite%20Loyal" target="_blank"><div class="elite-btn-icon">0007</div><div class="elite-btn-text">Código de Pantalla</div></a>
+        <a class="elite-btn" href="https://wa.me/584149208034?text=Hola%20Elite%20Loyal" target="_blank"><img src="icons/mail.svg" class="elite-btn-icon" alt="@"><div class="elite-btn-text">Contacto Elite</div></a>
+        <a class="elite-btn" href="https://wa.me/584149208034?text=Hola%20Elite%20Loyal" target="_blank"><img src="icons/menu.svg" class="elite-btn-icon" alt="Diagrama"><div class="elite-btn-text">Diagrama de Negocios</div></a>
+        <a class="elite-btn" href="https://wa.me/584149208034?text=Hola%20Elite%20Loyal" target="_blank"><img src="assets/promociones/promo1.jpeg" class="elite-btn-icon" alt="Grua"><div class="elite-btn-text">Solicitud de Central de Grua</div></a>
+        <a class="elite-btn" href="https://wa.me/584149208034?text=Hola%20Elite%20Loyal" target="_blank"><img src="icons/whatsapp.svg" class="elite-btn-icon" alt="911"><div class="elite-btn-text">911 Bomberos FNC</div></a>
+        <a class="elite-btn" href="#" id="open-afiliados"><img src="icons/instagram.svg" class="elite-btn-icon" alt="Afiliados"><div class="elite-btn-text">Afiliados</div></a>
+        <a class="elite-btn" href="https://wa.me/584149208034?text=Hola%20Elite%20Loyal" target="_blank"><img src="assets/promociones/promo2.jpeg" class="elite-btn-icon" alt="Repuestos"><div class="elite-btn-text">Repuestos 24 horas</div></a>
+        <a class="elite-btn" href="https://wa.me/584149208034?text=Hola%20Elite%20Loyal" target="_blank"><img src="assets/promociones/promo3.jpeg" class="elite-btn-icon" alt="Poliza"><div class="elite-btn-text">Cotizar tu Poliza RCV</div></a>
+        <a class="elite-btn" href="#" id="open-promos"><img src="assets/promociones/promo4.jpeg" class="elite-btn-icon" alt="Promoción"><div class="elite-btn-text">Promoción</div></a>
       </div>
-      <div class="card" data-action="contact-mail">
-        <div class="icon" style="background-image:url('assets/iconos/at.svg');"></div>
-        <p>Contacto Elite</p>
+      <div class="elite-oil-change" id="open-oil-form">Próximo cambio de aceite</div>
+      <div id="oil-modal" class="oil-modal">
+        <div class="oil-modal-content">
+          <span class="oil-modal-close" id="close-oil-form">&times;</span>
+          <h2>Gestión de Cambio de Aceite</h2>
+          <form id="oil-form">
+            <label>Marca de aceite:<br>
+              <input type="text" name="marca" required>
+            </label><br>
+            <label>Tipo de aceite:<br>
+              <input type="text" name="tipo" required>
+            </label><br>
+            <label>Fecha del cambio:<br>
+              <input type="date" name="fecha" required>
+            </label><br>
+            <label>¿Cada cuánto cambias el aceite?</label><br>
+            <label><input type="radio" name="intervalo" value="5000" required> 5.000 km</label>
+            <label><input type="radio" name="intervalo" value="7000"> 7.000 km</label><br>
+            <label>Kilometraje actual:<br>
+              <input type="number" name="km_actual" id="km_actual" required>
+            </label><br>
+            <label>Kilometraje del próximo cambio:<br>
+              <input type="number" name="km_proximo" id="km_proximo" readonly>
+            </label><br>
+            <label>Correo electrónico:<br>
+              <input type="email" name="email" required>
+            </label><br>
+            <button type="submit">Enviar información</button>
+          </form>
+        </div>
       </div>
-      <div class="card" data-action="diagram-url">
-        <div class="icon" style="background-image:url('assets/iconos/chart-bar.svg');"></div>
-        <p>Diagrama de Negocios</p>
-      </div>
-      <div class="card" data-action="call-tow">
-        <div class="icon" style="background-image:url('assets/iconos/tow-truck.svg');"></div>
-        <p>Solicitud de Central de Grúa</p>
-      </div>
-      <div class="card" data-action="call-911">
-        <div class="icon" style="background-image:url('assets/iconos/phone.svg');"></div>
-        <p>911 / Bomberos FNC</p>
-      </div>
-      <div class="card" data-action="show-affiliates">
-        <div class="icon" style="background-image:url('assets/iconos/users.svg');"></div>
-        <p>Afiliados</p>
-      </div>
-      <div class="card" data-action="open-repuestos">
-        <div class="icon" style="background-image:url('assets/iconos/box-open.svg');"></div>
-        <p>Repuestos 24 horas</p>
-      </div>
-      <div class="card important" data-action="quote-policy">
-        <div class="icon" style="background-image:url('assets/iconos/car-side.svg');"></div>
-        <p>Cotizar tu Póliza RCV</p>
-      </div>
-      <div class="card" data-action="open-promo">
-        <div class="icon" style="background-image:url('assets/iconos/bullhorn.svg');"></div>
-        <p>Promoción</p>
-      </div>
-    </section>
-
-    <!-- BOTÓN DE CAMBIO DE ACEITE -->
-    <button id="oilBtn" class="oil-btn">
-      Próximo cambio de aceite
-    </button>
-
-    <!-- MODAL DE FORMULARIO -->
-    <div id="oilModal" class="modal hidden">
-      <div class="modal-content">
-        <button id="closeModal" class="close">&times;</button>
-        <h2>Próximo cambio de aceite</h2>
-        <form id="oilForm">
-          <label>
-            Fecha del cambio
-            <input type="date" id="changeDate" required/>
-          </label>
-          <label>
-            Kilometraje actual (km)
-            <input type="number" id="currentKm" placeholder="Km actual" required/>
-          </label>
-          <label>
-            Intervalo de cambio
-            <select id="interval" required>
-              <option value="5000">5 000 km</option>
-              <option value="7000">7 000 km</option>
-            </select>
-          </label>
-          <label>
-            Correo electrónico
-            <input type="email" id="email" placeholder="tú@dominio.com" required/>
-          </label>
-          <button type="submit" class="submit-btn">Aceptar</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-      <p>
-        NOS MOVEMOS CONTIGO,<br/>
-        PRESENTE DONDE NOS NECESITES.
-      </p>
+    </main>
+    <footer class="elite-footer">
+      <div class="elite-slogan">NOS MOVEMOS CONTIGO, <br>PRESENTE DONDE NOS NECESITES.</div>
     </footer>
   </div>
 
-  <!-- SCRIPTS -->
-  <script src="script.js"></script>
+  <!-- Modal Afiliados -->
+  <div id="afiliados-modal" class="oil-modal">
+    <div class="oil-modal-content afiliados-content">
+      <span class="oil-modal-close" id="close-afiliados-modal">&times;</span>
+      <h2>Afiliados</h2>
+      <div class="afiliados-grid">
+        <div class="afiliado-card">
+          <img src="assets/afiliados/constructora.jpeg" alt="Logo Empresa 1">
+          <h3>Constructora Ejemplo</h3>
+          <div class="afiliado-links">
+            <a href="https://instagram.com/empresa1" target="_blank"><img src="icons/instagram.svg" alt="Instagram"></a>
+            <a href="https://wa.me/584149208034" target="_blank"><img src="icons/whatsapp.svg" alt="WhatsApp"></a>
+            <a href="https://maps.app.goo.gl/N4nTrHuqdBZx5vAW9" target="_blank"><img src="icons/menu.svg" alt="Ubicación"></a>
+          </div>
+        </div>
+        <div class="afiliado-card">
+          <img src="assets/ELITE_Elite_Logo_blanco_.png" alt="Logo Empresa 2">
+          <h3>Empresa 2</h3>
+          <div class="afiliado-links">
+            <a href="#" target="_blank"><img src="icons/instagram.svg" alt="Instagram"></a>
+            <a href="#" target="_blank"><img src="icons/whatsapp.svg" alt="WhatsApp"></a>
+            <a href="#" target="_blank"><img src="icons/menu.svg" alt="Ubicación"></a>
+          </div>
+        </div>
+        <div class="afiliado-card">
+          <img src="assets/ELITE_Elite_Logo_blanco_.png" alt="Logo Empresa 3">
+          <h3>Empresa 3</h3>
+          <div class="afiliado-links">
+            <a href="#" target="_blank"><img src="icons/instagram.svg" alt="Instagram"></a>
+            <a href="#" target="_blank"><img src="icons/whatsapp.svg" alt="WhatsApp"></a>
+            <a href="#" target="_blank"><img src="icons/menu.svg" alt="Ubicación"></a>
+          </div>
+        </div>
+        <div class="afiliado-card">
+          <img src="assets/ELITE_Elite_Logo_blanco_.png" alt="Logo Empresa 4">
+          <h3>Empresa 4</h3>
+          <div class="afiliado-links">
+            <a href="#" target="_blank"><img src="icons/instagram.svg" alt="Instagram"></a>
+            <a href="#" target="_blank"><img src="icons/whatsapp.svg" alt="WhatsApp"></a>
+            <a href="#" target="_blank"><img src="icons/menu.svg" alt="Ubicación"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Promociones -->
+  <div id="promo-modal" class="oil-modal">
+    <div class="oil-modal-content">
+      <span class="oil-modal-close" id="close-promo-modal">&times;</span>
+      <h2>Promociones</h2>
+      <div class="promo-grid">
+        <img src="assets/promociones/promo1.jpeg" alt="Promo 1">
+        <img src="assets/promociones/promo2.jpeg" alt="Promo 2">
+        <img src="assets/promociones/promo3.jpeg" alt="Promo 3">
+        <img src="assets/promociones/promo4.jpeg" alt="Promo 4">
+      </div>
+    </div>
+  </div>
+  <!-- Modal Imagen Promoción -->
+  <div id="img-modal">
+    <span id="img-modal-close">&times;</span>
+    <img id="img-modal-src" src="" alt="Promoción">
+  </div>
+
+  <script>
+    // Preloader
+    window.addEventListener('load',()=>{ gsap.to('#preloader',{opacity:0,duration:0.8,onComplete:()=>{document.getElementById('preloader').style.display='none';}}); });
+    // Partículas
+    particlesJS.load('particles-js','particles.json',null);
+    // Tilt 3D con gyroscope y sin glare
+    VanillaTilt.init(document.querySelectorAll('[data-tilt]'),{
+      max:15,
+      speed:1000,
+      easing:"cubic-bezier(.03,.98,.52,.99)",
+      glare:false,
+      scale:1.05,
+      gyroscope:true
+    });
+    // Lema rotatorio
+    const slogans=['Aliados en Movilidad','Tu Seguridad, Nuestra Prioridad','Cobertura Integral'];
+    const tagEl=document.querySelector('.tagline');let idx=0;
+    function changeTagline(){ gsap.to(tagEl,{opacity:0,duration:0.4,onComplete:()=>{tagEl.textContent=slogans[idx];idx=(idx+1)%slogans.length;gsap.to(tagEl,{opacity:1,duration:0.4});}}); }
+    tagEl.textContent=slogans[idx++]; setTimeout(changeTagline,0); setInterval(changeTagline,4000);
+    // Entrada
+    const tl=gsap.timeline({defaults:{ease:'power2.out'}});
+    tl.to('.logo',{opacity:1,y:-20,duration:1.2})
+      .to('.icon-grid',{opacity:1,duration:0.6},'-=0.6')
+      .from('.icon-item',{y:40,opacity:0,stagger:0.15,duration:0.6},'-=0.4')
+      .to('.tagline',{opacity:1,y:-10,duration:0.8},'-=0.4');
+    // Hover partículas + bounce + sonido + ripple
+    document.querySelectorAll('.icon-item').forEach(item=>{
+      item.addEventListener('mouseenter',e=>{
+        const p=window.pJSDom&&window.pJSDom[0].pJS; if(p) p.fn.interactivity.modes.pushParticles(10,{x:e.clientX,y:e.clientY});
+        gsap.fromTo(item.querySelector('.icon-bg'),{scale:1},{scale:1.1,duration:0.3,ease:'bounce.out'});
+      });
+      item.addEventListener('click',e=>{
+        // sonido
+        const ctx=new AudioContext(),o=ctx.createOscillator();o.type='sine';o.frequency.value=300;o.connect(ctx.destination);o.start();o.stop(ctx.currentTime+0.1);
+        // ripple
+        const bg=item.querySelector('.icon-bg'),r=bg.getBoundingClientRect(),d=Math.max(r.width,r.height),span=document.createElement('span');
+        span.classList.add('ripple');span.style.width=span.style.height=d+'px';
+        span.style.left=(e.clientX-r.left-d/2)+'px';span.style.top=(e.clientY-r.top-d/2)+'px';bg.appendChild(span);
+        setTimeout(()=>span.remove(),600);
+      });
+    });
+    // Toggle
+    const btn=document.getElementById('theme-toggle');btn.addEventListener('click',()=>{document.body.classList.toggle('light-mode');btn.textContent=document.body.classList.contains('light-mode')?'🌞':'🌙';});
+
+    // Modal Afiliados
+    const afiliadosBtn = document.getElementById('open-afiliados');
+    const afiliadosModal = document.getElementById('afiliados-modal');
+    const afiliadosClose = document.getElementById('close-afiliados-modal');
+
+    afiliadosBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      afiliadosModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    afiliadosClose.addEventListener('click', function() {
+      afiliadosModal.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+    window.addEventListener('click', function(e) {
+      if (e.target === afiliadosModal) {
+        afiliadosModal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Modal Promociones
+    const promocionesBtn = document.getElementById('open-promos');
+    const promocionesModal = document.getElementById('promo-modal');
+    const promocionesClose = document.getElementById('close-promo-modal');
+
+    promocionesBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      promocionesModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    promocionesClose.addEventListener('click', function() {
+      promocionesModal.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+    window.addEventListener('click', function(e) {
+      if (e.target === promocionesModal) {
+        promocionesModal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Modal Imagen Promoción
+    const imgModal = document.getElementById('img-modal');
+    const imgModalSrc = document.getElementById('img-modal-src');
+    const imgModalClose = document.getElementById('img-modal-close');
+    document.querySelectorAll('.promo-img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function() {
+        imgModalSrc.src = this.src;
+        imgModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    imgModalClose.addEventListener('click', function() {
+      imgModal.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+    imgModal.addEventListener('click', function(e) {
+      if (e.target === imgModal) {
+        imgModal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
 </body>
 </html>
