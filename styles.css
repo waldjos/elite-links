@@ -33,7 +33,8 @@ body {
   color: var(--text-light);
   min-height: 100vh;
   margin: 0;
-  overflow: hidden;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   letter-spacing: 0.01em;
 }
 
@@ -64,6 +65,8 @@ body {
   justify-content: flex-start;
   position: relative;
   z-index: 1;
+  height: auto;
+  overflow-y: visible;
 }
 
 .elite-header {
@@ -318,63 +321,170 @@ body {
 }
 
 @media (max-width: 600px) {
-  .elite-header {
-    padding-top: 12px;
-    margin-bottom: 8px !important;
+  html, body {
+    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
+    overflow-x: hidden !important;
   }
-  .elite-logo {
-    max-width: 110px !important;
-    width: 60vw !important;
+  body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  .main-container {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    padding: 0 2vw !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    min-height: 100vh;
+    height: auto;
+    overflow-y: visible;
+  }
+  .elite-header {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding-top: 8px !important;
+    margin-bottom: 4px !important;
+  }
+  .elite-logo-group {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+  .logo img, .elite-logo {
+    max-width: 90px !important;
+    width: 38vw !important;
     margin-bottom: 0 !important;
   }
   .tagline {
-    font-size: 0.98rem !important;
-    margin-top: 4px !important;
-    margin-bottom: 8px !important;
+    font-size: 0.82rem !important;
+    margin-top: 2px !important;
+    margin-bottom: 4px !important;
+    text-align: center !important;
   }
   .elite-grid {
-    gap: 8px !important;
-    max-width: 99vw;
-    grid-template-columns: repeat(3, 1fr);
+    gap: 4px !important;
+    max-width: 100vw !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    margin-bottom: 10px !important;
   }
   .elite-btn {
-    min-height: 56px;
-    font-size: 0.89rem;
-    padding: 8px 2px 6px 2px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px var(--accent-glow);
-    border-width: 1.2px;
+    min-height: 44px !important;
+    font-size: 0.78rem !important;
+    padding: 4px 0 2px 0 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 6px var(--accent-glow) !important;
+    border-width: 1px !important;
   }
   .elite-btn-icon {
-    width: 32px !important;
-    height: 32px !important;
-    font-size: 1.2rem !important;
-    margin-bottom: 4px;
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 1rem !important;
+    margin-bottom: 2px !important;
   }
   .elite-btn-icon img, .elite-btn-icon svg {
-    width: 28px !important;
-    height: 28px !important;
+    width: 18px !important;
+    height: 18px !important;
   }
   .elite-btn-text {
-    font-size: 0.92rem;
-    min-height: 24px;
-    padding: 2px 0 0 0;
+    font-size: 0.78rem !important;
+    min-height: 16px !important;
+    padding: 1px 0 0 0 !important;
   }
   .elite-oil-change {
-    font-size: 0.98rem;
-    padding: 8px 0;
-    margin: 22px auto 18px auto;
-    max-width: 98vw;
-    border-radius: 10px;
+    font-size: 0.82rem !important;
+    padding: 6px 0 !important;
+    margin: 10px auto 8px auto !important;
+    max-width: 98vw !important;
+    border-radius: 8px !important;
   }
   .elite-footer {
     margin-top: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
   }
   .elite-slogan {
-    font-size: 0.92rem;
-    margin-top: 0;
-    margin-bottom: 8px;
-    letter-spacing: 0.01em;
+    font-size: 0.78rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 4px !important;
+    letter-spacing: 0.01em !important;
+    text-align: center !important;
+  }
+  .oil-modal-content, .afiliados-content {
+    padding: 8px 2px !important;
+    max-width: 99vw !important;
+    border-radius: 10px !important;
+  }
+  .afiliados-grid {
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-top: 8px !important;
+  }
+  .afiliado-card {
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 8px 2px !important;
+    gap: 6px !important;
+    max-width: 99vw !important;
+    border-radius: 8px !important;
+  }
+  .afiliado-card img {
+    width: 38px !important;
+    height: 38px !important;
+    margin-bottom: 0 !important;
+    border-radius: 6px !important;
+    padding: 2px !important;
+  }
+  .afiliado-info {
+    align-items: center !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  .afiliado-card h3 {
+    text-align: center !important;
+    font-size: 0.92rem !important;
+    margin-bottom: 2px !important;
+  }
+  .afiliado-links {
+    justify-content: center !important;
+    gap: 6px !important;
+    margin-top: 2px !important;
+  }
+  .afiliado-links img {
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 4px !important;
+    padding: 0 !important;
+  }
+  .promo-grid {
+    gap: 6px !important;
+    margin-top: 8px !important;
+  }
+  .promo-grid img {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+  }
+  #oil-form label {
+    font-size: 0.82rem !important;
+    margin: 6px 0 2px 0 !important;
+  }
+  #oil-form input[type="text"],
+  #oil-form input[type="date"],
+  #oil-form input[type="number"],
+  #oil-form input[type="email"] {
+    font-size: 0.82rem !important;
+    padding: 4px 6px !important;
+    border-radius: 4px !important;
+  }
+  #oil-form button[type="submit"] {
+    font-size: 0.92rem !important;
+    padding: 6px 0 !important;
+    border-radius: 6px !important;
   }
 }
 
@@ -410,7 +520,7 @@ body {
   box-shadow: 0 8px 32px rgba(0,0,0,0.5);
   position: relative;
   color: var(--light);
-  text-align: center;
+  text-align: center !important;
 }
 .afiliados-close {
   position: absolute; top: 16px; right: 20px;
@@ -665,5 +775,42 @@ body {
   .oil-modal-content {
     padding: 16px 4px;
     max-width: 98vw;
+  }
+  .afiliados-content {
+    padding: 8px 2px !important;
+    max-width: 99vw !important;
+    border-radius: 10px !important;
+  }
+  .afiliados-grid {
+    gap: 10px !important;
+    margin-top: 8px !important;
+  }
+  .afiliado-card {
+    max-width: 99vw !important;
+    border-radius: 8px !important;
+    padding: 8px 2px !important;
+    gap: 6px !important;
+  }
+  .afiliado-card img {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 6px !important;
+    padding: 2px !important;
+  }
+  .afiliado-card h3 {
+    font-size: 0.92rem !important;
+  }
+  .afiliado-desc {
+    font-size: 0.82rem !important;
+    margin-bottom: 2px !important;
+  }
+  .afiliado-links {
+    gap: 6px !important;
+  }
+  .afiliado-links img {
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 4px !important;
+    padding: 0 !important;
   }
 }
