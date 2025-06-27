@@ -54,18 +54,74 @@ setInterval(changeTagline, 4000);
 // Añádelo a la timeline para que aparezca tras el logo
 tl.to(".tagline", { opacity: 1, y: -10, duration: 0.8 }, "-=0.4");
 
+// --- Modal de Promociones ---
+const openPromos = document.getElementById('open-promos');
+const promoModal = document.getElementById('promo-modal');
+const closePromoModal = document.getElementById('close-promo-modal');
+if (openPromos && promoModal && closePromoModal) {
+  openPromos.onclick = (e) => {
+    e.preventDefault();
+    promoModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+  closePromoModal.onclick = () => {
+    promoModal.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+  window.addEventListener('click', (e) => {
+    if (e.target === promoModal) {
+      promoModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+  // Mostrar imagen en grande al hacer click
+  const promoImgs = promoModal.querySelectorAll('img');
+  const imgModal = document.getElementById('img-modal');
+  const imgModalSrc = document.getElementById('img-modal-src');
+  const imgModalClose = document.getElementById('img-modal-close');
+  promoImgs.forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', function() {
+      imgModalSrc.src = this.src;
+      imgModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  imgModalClose.addEventListener('click', function() {
+    imgModal.style.display = 'none';
+    document.body.style.overflow = '';
+  });
+  imgModal.addEventListener('click', function(e) {
+    if (e.target === imgModal) {
+      imgModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+}
+
 // --- Modal de cambio de aceite ---
 const openOilForm = document.getElementById('open-oil-form');
 const oilModal = document.getElementById('oil-modal');
 const closeOilForm = document.getElementById('close-oil-form');
-const oilForm = document.getElementById('oil-form');
-const kmActualInput = document.getElementById('km_actual');
-const kmProximoInput = document.getElementById('km_proximo');
-
 if (openOilForm && oilModal && closeOilForm) {
-  openOilForm.onclick = () => { oilModal.style.display = 'flex'; };
-  closeOilForm.onclick = () => { oilModal.style.display = 'none'; };
-  window.onclick = (e) => { if (e.target === oilModal) oilModal.style.display = 'none'; };
+  openOilForm.onclick = (e) => {
+    e.preventDefault();
+    oilModal.style.display = 'flex';
+    oilModal.style.alignItems = 'center';
+    oilModal.style.justifyContent = 'center';
+    document.body.style.overflow = 'hidden';
+  };
+  closeOilForm.onclick = (e) => {
+    e.preventDefault();
+    oilModal.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+  oilModal.addEventListener('click', (e) => {
+    if (e.target === oilModal) {
+      oilModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
 }
 
 // Calcular próximo cambio automáticamente
@@ -116,16 +172,6 @@ if (oilForm) {
   };
 }
 
-// --- Modal de Promociones ---
-const openPromos = document.getElementById('open-promos');
-const promoModal = document.getElementById('promo-modal');
-const closePromoModal = document.getElementById('close-promo-modal');
-if (openPromos && promoModal && closePromoModal) {
-  openPromos.onclick = () => { promoModal.style.display = 'flex'; };
-  closePromoModal.onclick = () => { promoModal.style.display = 'none'; };
-  window.addEventListener('click', (e) => { if (e.target === promoModal) promoModal.style.display = 'none'; });
-}
-
 // --- Modal de Afiliados ---
 const openAfiliados = document.getElementById('open-afiliados');
 const afiliadosModal = document.getElementById('afiliados-modal');
@@ -135,4 +181,102 @@ if (openAfiliados && afiliadosModal && closeAfiliadosModal) {
   closeAfiliadosModal.onclick = () => { afiliadosModal.style.display = 'none'; };
   window.addEventListener('click', (e) => { if (e.target === afiliadosModal) afiliadosModal.style.display = 'none'; });
 }
+
+// MODALES
+function closeAllModals() {
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.classList.remove('open');
+  });
+  document.body.classList.remove('modal-open');
+}
+
+// Botón Próximo cambio de aceite
+const oilBtn = document.querySelector('.elite-oil-change');
+if (oilBtn && oilModal) {
+  oilBtn.onclick = (e) => {
+    e.preventDefault();
+    closeAllModals();
+    oilModal.classList.add('open');
+    document.body.classList.add('modal-open');
+  };
+}
+
+// Botón Afiliados
+const afiliadosBtn = document.getElementById('btn-afiliados');
+if (afiliadosBtn && afiliadosModal) {
+  afiliadosBtn.onclick = (e) => {
+    e.preventDefault();
+    closeAllModals();
+    afiliadosModal.classList.add('open');
+    document.body.classList.add('modal-open');
+  };
+}
+
+// Botón Promociones
+const promoBtn = document.getElementById('btn-promociones');
+if (promoBtn && promoModal) {
+  promoBtn.onclick = (e) => {
+    e.preventDefault();
+    closeAllModals();
+    promoModal.classList.add('open');
+    document.body.classList.add('modal-open');
+  };
+  // Ampliar imagen de promoción
+  const promoImgs = promoModal.querySelectorAll('.promo-img');
+  promoImgs.forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', function() {
+      img.classList.toggle('zoom');
+    });
+  });
+}
+
+// --- Galería de Promociones ---
+const promoGalleryImgs = [
+  'assets/promociones/promocion1.jpeg',
+  'assets/promociones/promocion2.jpeg',
+  'assets/promociones/promocion3.jpeg',
+  'assets/promociones/promocion4.jpeg'
+];
+let promoGalleryIndex = 0;
+const promoGalleryImg = document.getElementById('promo-gallery-img');
+const promoPrev = document.getElementById('promo-prev');
+const promoNext = document.getElementById('promo-next');
+
+function showPromoGalleryImg(idx) {
+  promoGalleryImg.src = promoGalleryImgs[idx];
+}
+if (promoPrev && promoNext && promoGalleryImg) {
+  promoPrev.onclick = function(e) {
+    e.stopPropagation();
+    promoGalleryIndex = (promoGalleryIndex - 1 + promoGalleryImgs.length) % promoGalleryImgs.length;
+    showPromoGalleryImg(promoGalleryIndex);
+  };
+  promoNext.onclick = function(e) {
+    e.stopPropagation();
+    promoGalleryIndex = (promoGalleryIndex + 1) % promoGalleryImgs.length;
+    showPromoGalleryImg(promoGalleryIndex);
+  };
+  // Clic en la imagen para ampliar
+  promoGalleryImg.onclick = function() {
+    imgModalSrc.src = promoGalleryImgs[promoGalleryIndex];
+    imgModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+}
+
+// Cerrar modales
+const closeBtns = document.querySelectorAll('.modal .close');
+closeBtns.forEach(btn => {
+  btn.addEventListener('click', closeAllModals);
+});
+
+// Cerrar modal al hacer clic fuera del contenido
+window.addEventListener('click', (e) => {
+  document.querySelectorAll('.modal.open').forEach(modal => {
+    if (e.target === modal) {
+      closeAllModals();
+    }
+  });
+});
 });
