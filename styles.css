@@ -33,10 +33,50 @@ body {
   color: var(--text-light);
   min-height: 100vh;
   margin: 0;
-  max-height: 100vh;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   letter-spacing: 0.01em;
+}
+
+/* Fondo animado tipo gotas de lava (blobs) solo en verde, movimiento vertical */
+.animated-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: -2;
+  overflow: hidden;
+  background: #0a1020;
+}
+.animated-bg .blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(32px) brightness(1.1) saturate(1.1);
+  opacity: 0.55;
+  mix-blend-mode: lighten;
+  animation: blobMoveY 14s ease-in-out infinite alternate;
+}
+.animated-bg .blob1 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle at 60% 40%, #7fff7a 0%, #00ffb0 80%, transparent 100%);
+  left: -120px; top: -80px;
+  animation-delay: 0s;
+}
+.animated-bg .blob2 {
+  width: 340px; height: 340px;
+  background: radial-gradient(circle at 40% 60%, #7fff7a 0%, #00ffb0 80%, transparent 100%);
+  right: -100px; top: 40px;
+  animation-delay: 3s;
+}
+.animated-bg .blob3 {
+  width: 320px; height: 320px;
+  background: radial-gradient(circle at 60% 60%, #7fff7a 0%, #00ffb0 80%, transparent 100%);
+  left: 30vw; bottom: -120px;
+  animation-delay: 6s;
+}
+@keyframes blobMoveY {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(80px); }
+  100% { transform: translateY(-60px); }
 }
 
 /* 1. Fondo animado */
@@ -67,8 +107,7 @@ body {
   position: relative;
   z-index: 1;
   height: auto;
-  max-height: 100vh;
-  overflow-y: auto;
+  overflow-y: visible;
 }
 
 .elite-header {
@@ -176,15 +215,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--accent-2) 60%, var(--accent-3) 100%);
+  background: #181c2b !important;
   border-radius: 18px;
-  box-shadow: 0 0 24px var(--accent-glow), 0 0 32px var(--accent-2);
-  border: 1.5px solid var(--accent-glow);
+  box-shadow: none !important;
+  border: none !important;
 }
 .elite-btn-icon img, .elite-btn-icon svg {
   width: 54px !important;
   height: 54px !important;
   object-fit: contain;
+  filter: none !important;
 }
 .elite-btn-text {
   display: flex;
@@ -200,11 +240,11 @@ body {
 }
 
 .elite-oil-change {
-  background: var(--btn-gradient);
-  color: var(--text-dark);
+  background: #181c2b !important;
+  color: #fff !important;
   border: none;
   border-radius: 16px;
-  box-shadow: 0 4px 32px var(--accent-glow), 0 0 32px var(--accent-2);
+  box-shadow: 0 4px 32px rgba(24,28,43,0.18);
   transition: background .3s, color .3s, box-shadow .3s;
   padding: 18px 36px;
   font-size: 1.25rem;
@@ -217,13 +257,12 @@ body {
   letter-spacing: 0.04em;
 }
 .elite-oil-change:hover {
-  background: var(--btn-gradient-hover);
-  color: var(--accent-3);
-  box-shadow: 0 0 48px var(--accent-glow), 0 0 32px var(--accent-2);
+  background: #22304a !important;
+  color: #7fd7ff !important;
+  box-shadow: 0 0 24px #22304a;
 }
 
 .elite-footer, .elite-slogan {
-  display: none !important;
   color: var(--accent-2);
   text-shadow: 0 2px 8px #23243a, 0 0 24px var(--accent-glow);
   font-size: 1.4rem;
@@ -325,8 +364,9 @@ body {
 
 @media (max-width: 600px) {
   html, body {
-    max-height: 100vh !important;
-    overflow-y: auto !important;
+    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
     overflow-x: hidden !important;
   }
   body {
@@ -340,8 +380,9 @@ body {
     padding: 0 2vw !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    max-height: 100vh !important;
-    overflow-y: auto !important;
+    min-height: 100vh;
+    height: auto;
+    overflow-y: visible;
   }
   .elite-header {
     width: 100vw !important;
@@ -408,7 +449,6 @@ body {
     padding: 0 !important;
   }
   .elite-slogan {
-    display: none !important;
     font-size: 0.78rem !important;
     margin-top: 0 !important;
     margin-bottom: 4px !important;
