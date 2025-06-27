@@ -317,6 +317,67 @@ body {
   text-shadow: 0 2px 12px #000a;
 }
 
+@media (max-width: 600px) {
+  .elite-header {
+    padding-top: 12px;
+    margin-bottom: 8px !important;
+  }
+  .elite-logo {
+    max-width: 110px !important;
+    width: 60vw !important;
+    margin-bottom: 0 !important;
+  }
+  .tagline {
+    font-size: 0.98rem !important;
+    margin-top: 4px !important;
+    margin-bottom: 8px !important;
+  }
+  .elite-grid {
+    gap: 8px !important;
+    max-width: 99vw;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .elite-btn {
+    min-height: 56px;
+    font-size: 0.89rem;
+    padding: 8px 2px 6px 2px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px var(--accent-glow);
+    border-width: 1.2px;
+  }
+  .elite-btn-icon {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1.2rem !important;
+    margin-bottom: 4px;
+  }
+  .elite-btn-icon img, .elite-btn-icon svg {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .elite-btn-text {
+    font-size: 0.92rem;
+    min-height: 24px;
+    padding: 2px 0 0 0;
+  }
+  .elite-oil-change {
+    font-size: 0.98rem;
+    padding: 8px 0;
+    margin: 22px auto 18px auto;
+    max-width: 98vw;
+    border-radius: 10px;
+  }
+  .elite-footer {
+    margin-top: 0 !important;
+  }
+  .elite-slogan {
+    font-size: 0.92rem;
+    margin-top: 0;
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+  }
+}
+
 /* Ripple */
 .ripple { 
   position:absolute; 
