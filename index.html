@@ -95,7 +95,7 @@
           <img src="./assets/iconos/afiliados.png" class="elite-btn-icon" alt="Icono de afiliados" loading="lazy">
           <div class="elite-btn-text">Afiliados</div>
         </a>
-        <a class="elite-btn" href="#" aria-label="Contactar para repuestos 24 horas">
+        <a class="elite-btn" href="#" id="open-repuestos" aria-label="Ver repuestos 24 horas">
           <img src="./assets/iconos/respuestos.png" class="elite-btn-icon" alt="Icono de repuestos" loading="lazy">
           <div class="elite-btn-text">Repuestos 24 horas</div>
         </a>
@@ -114,27 +114,48 @@
           <span class="oil-modal-close" id="close-oil-form">&times;</span>
           <h2>Gestión de Cambio de Aceite</h2>
           <form id="oil-form">
-            <label>Marca de aceite:<br>
-              <input type="text" name="marca" required>
-            </label><br>
-            <label>Tipo de aceite:<br>
-              <input type="text" name="tipo" required>
-            </label><br>
-            <label>Fecha del cambio:<br>
-              <input type="date" name="fecha" required>
-            </label><br>
-            <label>¿Cada cuánto cambias el aceite?</label><br>
-            <label><input type="radio" name="intervalo" value="5000" required> 5.000 km</label>
-            <label><input type="radio" name="intervalo" value="7000"> 7.000 km</label><br>
-            <label>Kilometraje actual:<br>
-              <input type="number" name="km_actual" id="km_actual" required>
-            </label><br>
-            <label>Kilometraje del próximo cambio:<br>
-              <input type="number" name="km_proximo" id="km_proximo" readonly>
-            </label><br>
-            <label>Correo electrónico:<br>
-              <input type="email" name="email" required>
-            </label><br>
+            <div>
+              <label for="marca">Marca de aceite:</label>
+              <input type="text" id="marca" name="marca" required placeholder="Ej: Mobil 1, Castrol, Shell">
+            </div>
+            
+            <div>
+              <label for="tipo">Tipo de aceite:</label>
+              <input type="text" id="tipo" name="tipo" required placeholder="Ej: 5W-30, 10W-40, Sintético">
+            </div>
+            
+            <div>
+              <label for="fecha">Fecha del cambio:</label>
+              <input type="date" id="fecha" name="fecha" required>
+            </div>
+            
+            <div>
+              <label>¿Cada cuánto cambias el aceite?</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="intervalo" value="5000" required> 5.000 km
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="intervalo" value="7000"> 7.000 km
+                </label>
+              </div>
+            </div>
+            
+            <div>
+              <label for="km_actual">Kilometraje actual:</label>
+              <input type="number" id="km_actual" name="km_actual" required placeholder="Ej: 45000">
+            </div>
+            
+            <div>
+              <label for="km_proximo">Kilometraje del próximo cambio:</label>
+              <input type="number" id="km_proximo" name="km_proximo" readonly placeholder="Se calculará automáticamente">
+            </div>
+            
+            <div>
+              <label for="email">Correo electrónico:</label>
+              <input type="email" id="email" name="email" required placeholder="tu@email.com">
+            </div>
+            
             <button type="submit">Enviar información</button>
           </form>
         </div>
@@ -187,6 +208,53 @@
       </div>
     </div>
   </div>
+  
+  <!-- Modal Repuestos 24 horas -->
+  <div id="repuestos-modal" class="oil-modal" role="dialog" aria-labelledby="repuestos-title" aria-modal="true">
+    <div class="oil-modal-content afiliados-content">
+      <span class="oil-modal-close" id="close-repuestos-modal" aria-label="Cerrar modal">&times;</span>
+      <h2 id="repuestos-title" class="modal-title">Repuestos 24 Horas</h2>
+      <div class="afiliados-grid">
+        <div class="afiliado-card">
+          <img src="assets/iconos/respuestos.png" alt="Logo de Repuestos Elite" loading="lazy">
+          <div class="afiliado-info">
+            <h3>AutoPartes Elite</h3>
+            <div class="afiliado-desc">Repuestos originales y compatibles disponibles 24/7.</div>
+            <div class="afiliado-links">
+              <a href="https://instagram.com/autoparteselite" target="_blank" rel="noopener" aria-label="Seguir AutoPartes Elite en Instagram">
+                <img src="assets/iconos/redes.png" alt="Instagram" loading="lazy">
+              </a>
+              <a href="https://wa.me/584149208034?text=Necesito%20repuestos" target="_blank" rel="noopener" aria-label="Contactar AutoPartes Elite por WhatsApp">
+                <img src="assets/iconos/whast.png" alt="WhatsApp" loading="lazy">
+              </a>
+              <a href="https://maps.app.goo.gl/N4nTrHuqdBZx5vAW9" target="_blank" rel="noopener" aria-label="Ver ubicación de AutoPartes Elite">
+                <img src="assets/iconos/ubicacion.png" alt="Ubicación" loading="lazy">
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="afiliado-card">
+          <img src="assets/iconos/respuestos.png" alt="Logo de Repuestos Express" loading="lazy">
+          <div class="afiliado-info">
+            <h3>Repuestos Express</h3>
+            <div class="afiliado-desc">Entrega inmediata de repuestos automotrices.</div>
+            <div class="afiliado-links">
+              <a href="https://instagram.com/repuestosexpress" target="_blank" rel="noopener" aria-label="Seguir Repuestos Express en Instagram">
+                <img src="assets/iconos/redes.png" alt="Instagram" loading="lazy">
+              </a>
+              <a href="https://wa.me/584149208034?text=Repuestos%20urgentes" target="_blank" rel="noopener" aria-label="Contactar Repuestos Express por WhatsApp">
+                <img src="assets/iconos/whast.png" alt="WhatsApp" loading="lazy">
+              </a>
+              <a href="https://maps.google.com/maps?q=10.369898%2C-66.9824679&z=17&hl=es" target="_blank" rel="noopener" aria-label="Ver ubicación de Repuestos Express">
+                <img src="assets/iconos/ubicacion.png" alt="Ubicación" loading="lazy">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <!-- Modal Promociones -->
   <div id="promo-modal" class="oil-modal" role="dialog" aria-labelledby="promo-title" aria-modal="true">
     <div class="oil-modal-content">
@@ -200,11 +268,17 @@
       </div>
     </div>
   </div>
-  <!-- Modal Imagen Promoción -->
-  <div id="img-modal" role="dialog" aria-labelledby="img-modal-title" aria-modal="true">
-    <span id="img-modal-close" aria-label="Cerrar imagen">&times;</span>
-    <h2 id="img-modal-title" class="sr-only">Vista ampliada de promoción</h2>
-    <img id="img-modal-src" src="" alt="Vista ampliada de promoción" loading="lazy">
+  <!-- Modal Galería de Promociones -->
+  <div id="gallery-modal" class="gallery-modal" role="dialog" aria-labelledby="gallery-title" aria-modal="true">
+    <div class="gallery-container">
+      <button class="gallery-prev" aria-label="Imagen anterior">‹</button>
+      <img id="gallery-image" class="gallery-image" src="" alt="Promoción" loading="lazy">
+      <button class="gallery-next" aria-label="Imagen siguiente">›</button>
+      <div class="gallery-counter">
+        <span id="gallery-current">1</span> / <span id="gallery-total">4</span>
+      </div>
+      <button id="gallery-close" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 24px; cursor: pointer; z-index: 20002;" aria-label="Cerrar galería">&times;</button>
+    </div>
   </div>
   <!-- Modal Términos y Condiciones -->
   <div id="terms-modal" class="oil-modal">
@@ -338,6 +412,29 @@ Si cualquier disposición de estas Condiciones se considerara ilegal, nula o ine
       });
     }
 
+    // Modal Repuestos 24 horas
+    const repuestosBtn = document.getElementById('open-repuestos');
+    const repuestosModal = document.getElementById('repuestos-modal');
+    const repuestosClose = document.getElementById('close-repuestos-modal');
+
+    if (repuestosBtn && repuestosModal && repuestosClose) {
+      repuestosBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        repuestosModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+      repuestosClose.addEventListener('click', function() {
+        repuestosModal.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+      window.addEventListener('click', function(e) {
+        if (e.target === repuestosModal) {
+          repuestosModal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
     // Modal Promociones
     const promocionesBtn = document.getElementById('open-promos');
     const promocionesModal = document.getElementById('promo-modal');
@@ -361,26 +458,89 @@ Si cualquier disposición de estas Condiciones se considerara ilegal, nula o ine
       });
     }
 
-    // Modal Imagen Promoción
-    const imgModal = document.getElementById('img-modal');
-    const imgModalSrc = document.getElementById('img-modal-src');
-    const imgModalClose = document.getElementById('img-modal-close');
-    document.querySelectorAll('.promo-grid img').forEach(img => {
+    // Galería de Promociones
+    const galleryModal = document.getElementById('gallery-modal');
+    const galleryImage = document.getElementById('gallery-image');
+    const galleryPrev = document.querySelector('.gallery-prev');
+    const galleryNext = document.querySelector('.gallery-next');
+    const galleryClose = document.getElementById('gallery-close');
+    const galleryCurrent = document.getElementById('gallery-current');
+    const galleryTotal = document.getElementById('gallery-total');
+    
+    let currentImageIndex = 0;
+    const promoImages = Array.from(document.querySelectorAll('.promo-grid img'));
+    galleryTotal.textContent = promoImages.length;
+
+    // Funciones de la galería
+    function showImage(index) {
+      currentImageIndex = index;
+      galleryImage.src = promoImages[index].src;
+      galleryCurrent.textContent = index + 1;
+    }
+
+    function nextImage() {
+      showImage((currentImageIndex + 1) % promoImages.length);
+    }
+
+    function prevImage() {
+      showImage((currentImageIndex - 1 + promoImages.length) % promoImages.length);
+    }
+
+    // Event Listeners
+    document.querySelectorAll('.promo-grid img').forEach((img, index) => {
       img.style.cursor = 'zoom-in';
-      img.addEventListener('click', function() {
-        imgModalSrc.src = this.src;
-        imgModal.style.display = 'flex';
+      img.addEventListener('click', function(e) {
+        e.preventDefault();
+        currentImageIndex = index;
+        showImage(index);
+        galleryModal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
       });
     });
-    imgModalClose.addEventListener('click', function() {
-      imgModal.style.display = 'none';
+
+    galleryClose.addEventListener('click', () => {
+      galleryModal.style.display = 'none';
       document.body.style.overflow = '';
     });
-    imgModal.addEventListener('click', function(e) {
-      if (e.target === imgModal) {
-        imgModal.style.display = 'none';
-        document.body.style.overflow = '';
+
+    galleryPrev.addEventListener('click', prevImage);
+    galleryNext.addEventListener('click', nextImage);
+
+    // Gestos táctiles
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    galleryModal.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+    
+    galleryModal.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+    
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const swipeDistance = touchEndX - touchStartX;
+      
+      if (Math.abs(swipeDistance) > swipeThreshold) {
+        if (swipeDistance > 0) {
+          prevImage();
+        } else {
+          nextImage();
+        }
+      }
+    }
+
+    // Teclas de navegación
+    document.addEventListener('keydown', e => {
+      if (galleryModal.style.display === 'flex') {
+        if (e.key === 'ArrowLeft') prevImage();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'Escape') {
+          galleryModal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
       }
     });
 
