@@ -38,15 +38,23 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* Fondo animado tipo gotas de lava (blobs) solo en verde, movimiento vertical */
+/* Fondo animado */
 .animated-bg {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  top: 0; 
+  left: 0;
+  width: 100vw; 
+  height: 100vh;
   z-index: -2;
   overflow: hidden;
-  background: #0a1020;
+  background: radial-gradient(ellipse at 60% 20%, #1b3358 0%, #0a1020 80%), linear-gradient(120deg, #0a1020 0%, #1b3358 50%, #0a1020 100%);
+  background-blend-mode: screen, normal;
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease-in-out infinite;
+  filter: blur(2px) brightness(1.1);
 }
+
+/* Blobs animados */
 .animated-bg .blob {
   position: absolute;
   border-radius: 50%;
@@ -55,41 +63,32 @@ body {
   mix-blend-mode: lighten;
   animation: blobMoveY 14s ease-in-out infinite alternate;
 }
+
 .animated-bg .blob1 {
-  width: 420px; height: 420px;
+  width: 420px; 
+  height: 420px;
   background: radial-gradient(circle at 60% 40%, #7fff7a 0%, #00ffb0 80%, transparent 100%);
-  left: -120px; top: -80px;
+  left: -120px; 
+  top: -80px;
   animation-delay: 0s;
 }
+
 .animated-bg .blob2 {
-  width: 340px; height: 340px;
+  width: 340px; 
+  height: 340px;
   background: radial-gradient(circle at 40% 60%, #7fff7a 0%, #00ffb0 80%, transparent 100%);
-  right: -100px; top: 40px;
+  right: -100px; 
+  top: 40px;
   animation-delay: 3s;
 }
-.animated-bg .blob3 {
-  width: 320px; height: 320px;
-  background: radial-gradient(circle at 60% 60%, #7fff7a 0%, #00ffb0 80%, transparent 100%);
-  left: 30vw; bottom: -120px;
-  animation-delay: 6s;
-}
-@keyframes blobMoveY {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(80px); }
-  100% { transform: translateY(-60px); }
-}
 
-/* 1. Fondo animado */
-.animated-bg {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: radial-gradient(ellipse at 60% 20%, #1b3358 0%, #0a1020 80%), linear-gradient(120deg, #0a1020 0%, #1b3358 50%, #0a1020 100%);
-  background-blend-mode: screen, normal;
-  background-size: 200% 200%;
-  animation: gradientShift 12s ease-in-out infinite;
-  z-index: -2;
-  filter: blur(2px) brightness(1.1);
+.animated-bg .blob3 {
+  width: 320px; 
+  height: 320px;
+  background: radial-gradient(circle at 60% 60%, #7fff7a 0%, #00ffb0 80%, transparent 100%);
+  left: 30vw; 
+  bottom: -120px;
+  animation-delay: 6s;
 }
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
@@ -268,6 +267,89 @@ body {
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+}
+
+/* Footer azul marino final */
+.elite-footer-final {
+  width: 100vw;
+  background: #181c2b;
+  color: #b2eaff;
+  text-align: center;
+  font-size: 1.08rem;
+  font-weight: 600;
+  padding: 18px 0 12px 0;
+  letter-spacing: 0.04em;
+  box-shadow: 0 -2px 16px #0a1020cc;
+  margin-top: 32px;
+  z-index: 2;
+}
+@media (max-width: 600px) {
+  .elite-footer-final {
+    font-size: 0.98rem;
+    padding: 12px 0 8px 0;
+    margin-top: 18px;
+  }
+}
+
+
+.modal-title {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+
+/* Preloader mejorado */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#preloader .spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid var(--bg-2);
+  border-top: 6px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Botón de tema mejorado */
+#theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--bg-2);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-light);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform .2s;
+  z-index: 2;
+}
+
+#theme-toggle:active {
+  transform: scale(0.9);
+}
+
+#theme-toggle:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .container {
@@ -692,207 +774,120 @@ body {
   }
 }
 
-/* Galería de promociones como iconos */
-.promo-grid {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  margin-top: 18px;
-  flex-wrap: wrap;
-}
-.promo-grid img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px var(--accent-glow);
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  background: var(--accent-3);
-  border: 2px solid var(--accent-2);
-  display: block;
-}
-.promo-grid img:hover {
-  transform: scale(1.12);
-  box-shadow: 0 4px 24px var(--accent-glow);
-}
-@media (max-width: 600px) {
-  .promo-grid {
-    gap: 12px;
-  }
-  .promo-grid img {
-    width: 60px;
-    height: 60px;
-  }
-}
-
+/* Modales */
 .oil-modal {
   display: none;
   position: fixed;
   z-index: 10000;
-  left: 0; top: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(10, 20, 40, 0.92);
+  left: 0; 
+  top: 0;
+  width: 100vw; 
+  height: 100vh;
+  background: rgba(10, 20, 40, 0.96);
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(2px);
 }
+
 .oil-modal-content {
-  background: var(--glass);
-  border-radius: 26px;
-  box-shadow: 0 8px 40px 0 var(--accent-glow), 0 0 0 2px var(--accent-2);
-  color: var(--text-light);
-  padding: 32px 24px;
+  background: #181c2b;
   border-radius: 18px;
-  max-width: 380px;
-  width: 90vw;
-  box-shadow: 0 8px 32px #00e5ff55;
+  box-shadow: 0 8px 40px 0 #00e5ff55, 0 0 0 2px #b2eaff;
+  color: #b2eaff;
+  padding: 32px 24px;
+  max-width: 600px;
+  width: 96vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: left;
   position: relative;
-  color: #fff;
-  text-align: center;
   font-family: 'Montserrat', sans-serif;
 }
-.oil-modal-close {
-  color: var(--accent-2);
-  font-size: 2.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.2s;
+
+#terms-modal .oil-modal-content {
+  box-shadow: 0 8px 40px 0 #00e5ff99, 0 0 0 2px #b2eaff;
+  padding: 28px 18px 18px 18px;
 }
-.oil-modal-close:hover {
-  color: var(--accent-glow);
-}
-#oil-form label {
-  display: block;
-  margin: 12px 0 4px 0;
-  text-align: left;
+
+#terms-content {
   font-size: 1rem;
+  margin-bottom: 18px;
+  max-height: 60vh;
+  overflow-y: auto;
+  white-space: pre-line;
 }
-#oil-form input[type="text"],
-#oil-form input[type="date"],
-#oil-form input[type="number"],
-#oil-form input[type="email"] {
-  width: 100%;
-  padding: 7px 10px;
-  border-radius: 6px;
-  border: 1px solid #00e5ff;
-  margin-top: 2px;
-  margin-bottom: 8px;
-  background: #181f2e;
-  color: #fff;
-  font-size: 1rem;
+
+/* Footer */
+.elite-footer-final {
+  width: 100vw;
+  background: #181c2b;
+  color: #b2eaff;
+  text-align: center;
+  font-size: 1.08rem;
+  font-weight: 600;
+  padding: 18px 0 12px 0;
+  letter-spacing: 0.04em;
+  box-shadow: 0 -2px 16px #0a1020cc;
+  margin-top: 32px;
+  z-index: 2;
 }
-#oil-form input[type="radio"] {
-  margin-right: 6px;
-}
-#oil-form button[type="submit"] {
-  margin-top: 16px;
-  width: 100%;
-  background: #00e5ff;
-  color: #101c2c;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-#oil-form button[type="submit"]:hover {
-  background: #00b8cc;
-}
+
+/* Media queries consolidadas */
 @media (max-width: 600px) {
-  .oil-modal-content {
-    padding: 16px 4px;
-    max-width: 98vw;
+  .elite-footer-final {
+    font-size: 0.98rem;
+    padding: 12px 0 8px 0;
+    margin-top: 18px;
   }
-  .afiliados-content {
-    padding: 8px 2px !important;
-    max-width: 99vw !important;
-    border-radius: 10px !important;
+
+  .oil-modal-content,
+  #terms-modal .oil-modal-content {
+    max-width: 99vw;
+    width: 99vw;
+    padding: 10px 2vw;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
   }
-  .afiliados-grid {
-    gap: 10px !important;
-    margin-top: 8px !important;
+
+  #terms-content {
+    font-size: 0.92rem;
+    max-height: 45vh;
   }
-  .afiliado-card {
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    padding: 8px 2px !important;
-    gap: 8px !important;
-    max-width: 99vw !important;
-    border-radius: 8px !important;
-    background: rgba(255,255,255,0.04);
+
+  #oil-form label {
+    font-size: 0.92rem;
+    margin: 6px 0 2px 0;
   }
-  .afiliado-card img {
-    width: 38px !important;
-    height: 38px !important;
-    border-radius: 6px !important;
-    padding: 2px !important;
-    margin-bottom: 0 !important;
-    margin-right: 6px !important;
-    flex-shrink: 0;
+
+  #oil-form input[type="text"],
+  #oil-form input[type="date"],
+  #oil-form input[type="number"],
+  #oil-form input[type="email"] {
+    font-size: 0.92rem;
+    padding: 6px 8px;
+    border-radius: 4px;
   }
-  .afiliado-info {
-    align-items: flex-start !important;
-    margin-left: 0 !important;
-    width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-  }
-  .afiliado-card h3 {
-    text-align: left !important;
-    font-size: 0.92rem !important;
-    margin-bottom: 2px !important;
-    margin-top: 0 !important;
-  }
-  .afiliado-desc {
-    font-size: 0.82rem !important;
-    margin-bottom: 2px !important;
-    text-align: left !important;
-    max-width: 90vw !important;
-    line-height: 1.2 !important;
-  }
-  .afiliado-links {
-    width: 100% !important;
-    justify-content: flex-start !important;
-    gap: 8px !important;
-    margin-top: 4px !important;
-    flex-wrap: wrap !important;
-  }
-  .afiliado-links img {
-    width: 22px !important;
-    height: 22px !important;
-    border-radius: 4px !important;
-    padding: 0 !important;
-  }
-  /* Logo principal: más espacio arriba y tamaño máximo */
-  .elite-header {
-    padding-top: 32px !important;
-    margin-bottom: 8px !important;
-  }
-  .elite-logo-group {
-    margin-top: 0 !important;
-  }
-  .logo img, .elite-logo {
-    max-width: 110px !important;
-    width: 38vw !important;
-    margin-bottom: 0 !important;
-    margin-top: 12px !important;
+
+  #oil-form button[type="submit"] {
+    font-size: 1rem;
+    padding: 10px 0;
+    border-radius: 6px;
+    margin: 10px 0 4px 0;
+    width: 100%;
     display: block;
   }
 }
 
-/* Desktop: afinar alineación de texto afiliado */
-.afiliado-info {
-  align-items: flex-start;
-  text-align: left;
-}
-.afiliado-desc {
-  font-size: 1rem;
-  margin-bottom: 4px;
-  text-align: left;
-  line-height: 1.3;
+/* Clases de utilidad */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
