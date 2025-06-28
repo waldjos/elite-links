@@ -436,6 +436,11 @@ Si cualquier disposición de estas Condiciones se considerara ilegal, nula o ine
         </div>
       </div>
 
+  <!-- Botón de Términos y Condiciones en esquina superior izquierda -->
+  <button id="open-terms" title="Términos y Condiciones" style="position:fixed;top:18px;left:18px;z-index:10001;background:rgba(10,20,40,0.92);color:#00e5ff;border:none;border-radius:50%;width:44px;height:44px;box-shadow:0 2px 12px #00e5ff77;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;">
+    <ion-icon name="information-circle-outline"></ion-icon>
+  </button>
+
   <script>
     // Preloader
     window.addEventListener('load',()=>{ gsap.to('#preloader',{opacity:0,duration:0.8,onComplete:()=>{document.getElementById('preloader').style.display='none';}}); });
@@ -603,6 +608,8 @@ Si cualquier disposición de estas Condiciones se considerara ilegal, nula o ine
     function showTermsModal() {
       if (termsModal) {
         termsModal.style.display = 'flex';
+        termsModal.style.alignItems = 'center';
+        termsModal.style.justifyContent = 'center';
         document.body.style.overflow = 'hidden';
       }
     }
@@ -666,90 +673,102 @@ Si cualquier disposición de estas Condiciones se considerara ilegal, nula o ine
       });
     }
     // --- MODAL TÉRMINOS Y CONDICIONES: Solo al pulsar un botón del menú la primera vez ---
-(function(){
-  const termsModal = document.getElementById('terms-modal');
-  const acceptTerms = document.getElementById('accept-terms');
-  const acceptTermsBtn = document.getElementById('accept-terms-btn');
-  const closeTermsModal = document.getElementById('close-terms-modal');
-  let pendingHref = null, pendingTarget = null;
+    (function(){
+      const termsModal = document.getElementById('terms-modal');
+      const acceptTerms = document.getElementById('accept-terms');
+      const acceptTermsBtn = document.getElementById('accept-terms-btn');
+      const closeTermsModal = document.getElementById('close-terms-modal');
+      const openTermsBtn = document.getElementById('open-terms');
+      let pendingHref = null, pendingTarget = null;
 
-  function showTermsModal() {
-    termsModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
-  function hideTermsModal() {
-    termsModal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-  function termsAccepted() {
-    return localStorage.getItem('elite_terms_accepted') === '1';
-  }
-  function setTermsAccepted() {
-    localStorage.setItem('elite_terms_accepted', '1');
-  }
-
-  // Solo la primera vez: interceptar clicks en los botones principales
-  if (termsModal && acceptTerms && acceptTermsBtn) {
-    const gridBtns = document.querySelectorAll('.elite-btn, .poliza-btn');
-    if (!termsAccepted()) {
-      gridBtns.forEach(btn => {
-        btn.addEventListener('click', function(e){
-          // Solo si es la primera vez
-          if (!termsAccepted()) {
-            e.preventDefault();
-            pendingHref = btn.getAttribute('href');
-            pendingTarget = btn.getAttribute('target');
-            showTermsModal();
-          }
-        }, true);
-      });
-    }
-
-    // Habilitar botón solo si se acepta
-    acceptTermsBtn.disabled = true;
-    acceptTerms.addEventListener('change', function(){
-      acceptTermsBtn.disabled = !this.checked;
-      acceptTermsBtn.style.opacity = this.checked ? '1' : '0.6';
-      acceptTermsBtn.style.cursor = this.checked ? 'pointer' : 'not-allowed';
-    });
-
-    // Al aceptar, guardar y continuar navegación si corresponde
-    acceptTermsBtn.addEventListener('click', function(){
-      if(acceptTerms.checked){
-        setTermsAccepted();
-        hideTermsModal();
-        // Si había un enlace pendiente, navegar
-        if (pendingHref && pendingHref !== '#') {
-          if (pendingTarget === '_blank') {
-            window.open(pendingHref, '_blank');
-          } else {
-            window.location.href = pendingHref;
-          }
+      function showTermsModal() {
+        if (termsModal) {
+          termsModal.style.display = 'flex';
+          termsModal.style.alignItems = 'center';
+          termsModal.style.justifyContent = 'center';
+          document.body.style.overflow = 'hidden';
         }
-        pendingHref = null; pendingTarget = null;
       }
-    });
+      function hideTermsModal() {
+        if (termsModal) {
+          termsModal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      }
+      function termsAccepted() {
+        return localStorage.getItem('elite_terms_accepted') === '1';
+      }
+      function setTermsAccepted() {
+        localStorage.setItem('elite_terms_accepted', '1');
+      }
 
-    // Prevenir cerrar el modal si no se han aceptado los términos
-    if (closeTermsModal) {
-      closeTermsModal.addEventListener('click', function(){
+      // Solo la primera vez: interceptar clicks en los botones principales
+      if (termsModal && acceptTerms && acceptTermsBtn) {
+        const gridBtns = document.querySelectorAll('.elite-btn, .poliza-btn');
         if (!termsAccepted()) {
-          showTermsModal();
-        } else {
-          hideTermsModal();
+          gridBtns.forEach(btn => {
+            btn.addEventListener('click', function(e){
+              if (!termsAccepted()) {
+                e.preventDefault();
+                pendingHref = btn.getAttribute('href');
+                pendingTarget = btn.getAttribute('target');
+                showTermsModal();
+              }
+            }, true);
+          });
         }
-      });
-    }
-    // Prevenir cerrar haciendo click fuera si no se han aceptado
-    window.addEventListener('click', function(e){
-      if(e.target === termsModal && !termsAccepted()){
-        showTermsModal();
-      } else if (e.target === termsModal) {
-        hideTermsModal();
+
+        // Habilitar botón solo si se acepta
+        acceptTermsBtn.disabled = true;
+        acceptTerms.addEventListener('change', function(){
+          acceptTermsBtn.disabled = !this.checked;
+          acceptTermsBtn.style.opacity = this.checked ? '1' : '0.6';
+          acceptTermsBtn.style.cursor = this.checked ? 'pointer' : 'not-allowed';
+        });
+
+        // Al aceptar, guardar y continuar navegación si corresponde
+        acceptTermsBtn.addEventListener('click', function(){
+          if(acceptTerms.checked){
+            setTermsAccepted();
+            hideTermsModal();
+            if (pendingHref && pendingHref !== '#') {
+              if (pendingTarget === '_blank') {
+                window.open(pendingHref, '_blank');
+              } else {
+                window.location.href = pendingHref;
+              }
+            }
+            pendingHref = null; pendingTarget = null;
+          }
+        });
+
+        // Prevenir cerrar el modal si no se han aceptado los términos
+        if (closeTermsModal) {
+          closeTermsModal.addEventListener('click', function(){
+            if (!termsAccepted()) {
+              showTermsModal();
+            } else {
+              hideTermsModal();
+            }
+          });
+        }
+        // Prevenir cerrar haciendo click fuera si no se han aceptado
+        window.addEventListener('click', function(e){
+          if(e.target === termsModal && !termsAccepted()){
+            showTermsModal();
+          } else if (e.target === termsModal) {
+            hideTermsModal();
+          }
+        });
       }
-    });
-  }
-})();
+      // SIEMPRE: botón de información muestra el modal (sin bloquear navegación)
+      if (openTermsBtn) {
+        openTermsBtn.addEventListener('click', function(e){
+          e.preventDefault();
+          showTermsModal();
+        });
+      }
+    })();
   </script>
 </body>
 </html>

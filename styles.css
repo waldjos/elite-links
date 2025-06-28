@@ -502,31 +502,20 @@ body {
     border-radius: 4px !important;
     padding: 0 !important;
   }
-  .promo-grid {
-    gap: 6px !important;
-    margin-top: 8px !important;
+  /* Logo principal: más espacio arriba y tamaño máximo */
+  .elite-header {
+    padding-top: 32px !important;
+    margin-bottom: 8px !important;
   }
-  .promo-grid img {
-    width: 32px !important;
-    height: 32px !important;
-    border-radius: 6px !important;
+  .elite-logo-group {
+    margin-top: 0 !important;
   }
-  #oil-form label {
-    font-size: 0.82rem !important;
-    margin: 6px 0 2px 0 !important;
-  }
-  #oil-form input[type="text"],
-  #oil-form input[type="date"],
-  #oil-form input[type="number"],
-  #oil-form input[type="email"] {
-    font-size: 0.82rem !important;
-    padding: 4px 6px !important;
-    border-radius: 4px !important;
-  }
-  #oil-form button[type="submit"] {
-    font-size: 0.92rem !important;
-    padding: 6px 0 !important;
-    border-radius: 6px !important;
+  .logo img, .elite-logo {
+    max-width: 110px !important;
+    width: 38vw !important;
+    margin-bottom: 0 !important;
+    margin-top: 12px !important;
+    display: block;
   }
 }
 
@@ -828,26 +817,50 @@ body {
     margin-top: 8px !important;
   }
   .afiliado-card {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    padding: 8px 2px !important;
+    gap: 8px !important;
     max-width: 99vw !important;
     border-radius: 8px !important;
-    padding: 8px 2px !important;
-    gap: 6px !important;
+    background: rgba(255,255,255,0.04);
   }
   .afiliado-card img {
     width: 38px !important;
     height: 38px !important;
     border-radius: 6px !important;
     padding: 2px !important;
+    margin-bottom: 0 !important;
+    margin-right: 6px !important;
+    flex-shrink: 0;
+  }
+  .afiliado-info {
+    align-items: flex-start !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
   }
   .afiliado-card h3 {
+    text-align: left !important;
     font-size: 0.92rem !important;
+    margin-bottom: 2px !important;
+    margin-top: 0 !important;
   }
   .afiliado-desc {
     font-size: 0.82rem !important;
     margin-bottom: 2px !important;
+    text-align: left !important;
+    max-width: 90vw !important;
+    line-height: 1.2 !important;
   }
   .afiliado-links {
-    gap: 6px !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    margin-top: 4px !important;
+    flex-wrap: wrap !important;
   }
   .afiliado-links img {
     width: 22px !important;
@@ -855,4 +868,31 @@ body {
     border-radius: 4px !important;
     padding: 0 !important;
   }
+  /* Logo principal: más espacio arriba y tamaño máximo */
+  .elite-header {
+    padding-top: 32px !important;
+    margin-bottom: 8px !important;
+  }
+  .elite-logo-group {
+    margin-top: 0 !important;
+  }
+  .logo img, .elite-logo {
+    max-width: 110px !important;
+    width: 38vw !important;
+    margin-bottom: 0 !important;
+    margin-top: 12px !important;
+    display: block;
+  }
+}
+
+/* Desktop: afinar alineación de texto afiliado */
+.afiliado-info {
+  align-items: flex-start;
+  text-align: left;
+}
+.afiliado-desc {
+  font-size: 1rem;
+  margin-bottom: 4px;
+  text-align: left;
+  line-height: 1.3;
 }
