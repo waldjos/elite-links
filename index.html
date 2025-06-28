@@ -284,8 +284,8 @@
         <a class="elite-btn" href="https://wa.me/584149208034?text=Hola%20Elite%20Loyal" target="_blank"><div class="elite-btn-icon">10</div><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Código de Pantalla</div></a>
         <a class="elite-btn" href="https://www.instagram.com/elitealiadosloyal?igsh=MXFsaGwycWI3bmJzYQ==" target="_blank"><img src="./assets/iconos/redes.png" class="elite-btn-icon" alt="@"><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Contacto Elite</div></a>
         <a class="elite-btn" href="https://wa.me/+58 414-9208034" target="_blank"><img src="./assets/iconos/contrato.png" class="elite-btn-icon" alt="Diagrama"><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Solicitud de contrato de grua</div></a>
-        <a class="elite-btn" href="02127202505" target="_blank"><img src="./assets/iconos/grua.png" class="elite-btn-icon" alt="Grua"><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Solicitud de central de grua</div></a>
-        <a class="elite-btn" href="02123836152" target="_blank"><img src="./assets/iconos/emergencia.png" class="elite-btn-icon" alt="911"><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Emergencia</div></a>
+        <a class="elite-btn" href="tel:02127202505" target="_blank"><img src="./assets/iconos/grua.png" class="elite-btn-icon" alt="Grua"><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Solicitud de central de grua</div></a>
+        <a class="elite-btn" href="tel:02123836152" target="_blank"><img src="./assets/iconos/emergencia.png" class="elite-btn-icon" alt="911"><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Emergencia</div></a>
         <a class="elite-btn" href="#" id="open-afiliados"><img src="./assets/iconos/afiliados.png" class="elite-btn-icon" alt="Afiliados"><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Afiliados</div></a>
         <a class="elite-btn" href="" target="_blank"><img src="./assets/iconos/respuestos.png" class="elite-btn-icon" alt="Repuestos"><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Repuestos 24 horas</div></a>
         <a class="elite-btn poliza-btn" href="https://wa.me/584149208034?text=Hola%20Elite%20Loyal" target="_blank"><img src="assets/Logo/logouniversitas.png" class="elite-btn-icon" alt="Poliza"><div class="elite-btn-text" style="display:flex;align-items:center;justify-content:center;text-align:center;">Cotiza tu poliza RCV</div></a>
@@ -665,6 +665,91 @@ Si cualquier disposición de estas Condiciones se considerara ilegal, nula o ine
         }
       });
     }
+    // --- MODAL TÉRMINOS Y CONDICIONES: Solo al pulsar un botón del menú la primera vez ---
+(function(){
+  const termsModal = document.getElementById('terms-modal');
+  const acceptTerms = document.getElementById('accept-terms');
+  const acceptTermsBtn = document.getElementById('accept-terms-btn');
+  const closeTermsModal = document.getElementById('close-terms-modal');
+  let pendingHref = null, pendingTarget = null;
+
+  function showTermsModal() {
+    termsModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function hideTermsModal() {
+    termsModal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function termsAccepted() {
+    return localStorage.getItem('elite_terms_accepted') === '1';
+  }
+  function setTermsAccepted() {
+    localStorage.setItem('elite_terms_accepted', '1');
+  }
+
+  // Solo la primera vez: interceptar clicks en los botones principales
+  if (termsModal && acceptTerms && acceptTermsBtn) {
+    const gridBtns = document.querySelectorAll('.elite-btn, .poliza-btn');
+    if (!termsAccepted()) {
+      gridBtns.forEach(btn => {
+        btn.addEventListener('click', function(e){
+          // Solo si es la primera vez
+          if (!termsAccepted()) {
+            e.preventDefault();
+            pendingHref = btn.getAttribute('href');
+            pendingTarget = btn.getAttribute('target');
+            showTermsModal();
+          }
+        }, true);
+      });
+    }
+
+    // Habilitar botón solo si se acepta
+    acceptTermsBtn.disabled = true;
+    acceptTerms.addEventListener('change', function(){
+      acceptTermsBtn.disabled = !this.checked;
+      acceptTermsBtn.style.opacity = this.checked ? '1' : '0.6';
+      acceptTermsBtn.style.cursor = this.checked ? 'pointer' : 'not-allowed';
+    });
+
+    // Al aceptar, guardar y continuar navegación si corresponde
+    acceptTermsBtn.addEventListener('click', function(){
+      if(acceptTerms.checked){
+        setTermsAccepted();
+        hideTermsModal();
+        // Si había un enlace pendiente, navegar
+        if (pendingHref && pendingHref !== '#') {
+          if (pendingTarget === '_blank') {
+            window.open(pendingHref, '_blank');
+          } else {
+            window.location.href = pendingHref;
+          }
+        }
+        pendingHref = null; pendingTarget = null;
+      }
+    });
+
+    // Prevenir cerrar el modal si no se han aceptado los términos
+    if (closeTermsModal) {
+      closeTermsModal.addEventListener('click', function(){
+        if (!termsAccepted()) {
+          showTermsModal();
+        } else {
+          hideTermsModal();
+        }
+      });
+    }
+    // Prevenir cerrar haciendo click fuera si no se han aceptado
+    window.addEventListener('click', function(e){
+      if(e.target === termsModal && !termsAccepted()){
+        showTermsModal();
+      } else if (e.target === termsModal) {
+        hideTermsModal();
+      }
+    });
+  }
+})();
   </script>
 </body>
 </html>
