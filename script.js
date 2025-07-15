@@ -170,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const templateParams = {
           email: data.email, // Este es el email del usuario que recibirá el correo
           name: 'Cliente Elite Loyal',
+          marca_vehiculo: data['marca-vehiculo'], // Añadido marca del vehículo
           marca: data.marca,
           tipo: data.tipo,
           fecha: fechaFormateada,
