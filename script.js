@@ -1,3 +1,135 @@
+  // --- Modal de kit de tiempo ---
+  const openKitForm = document.getElementById('open-kit-form');
+  const kitModal = document.getElementById('kit-modal');
+  const closeKitForm = document.getElementById('close-kit-form');
+  const kitForm = document.getElementById('kit-form');
+  const kmActualKitInput = document.getElementById('km_actual_kit');
+  const kmProximoKitInput = document.getElementById('km_proximo_kit');
+
+  if (openKitForm && kitModal && closeKitForm) {
+    function openKitModalHandler(e) {
+      e.preventDefault();
+      kitModal.style.display = 'flex';
+      kitModal.style.alignItems = 'center';
+      kitModal.style.justifyContent = 'center';
+      document.body.style.overflow = 'hidden';
+    }
+    openKitForm.onclick = openKitModalHandler;
+
+    closeKitForm.onclick = (e) => {
+      e.preventDefault();
+      kitModal.style.display = 'none';
+      document.body.style.overflow = '';
+    };
+
+    kitModal.addEventListener('click', (e) => {
+      if (e.target === kitModal) {
+        kitModal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  // Calcular próximo cambio automáticamente para kit de tiempo
+  if (kitForm && kmActualKitInput && kmProximoKitInput) {
+    function updateProximoKit() {
+      const kmActual = parseInt(kmActualKitInput.value) || 0;
+      const intervalo = parseInt(kitForm.querySelector('input[name="intervalo-kit"]:checked')?.value || 0);
+      if (kmActual && intervalo) {
+        kmProximoKitInput.value = kmActual + intervalo;
+      } else {
+        kmProximoKitInput.value = '';
+      }
+    }
+
+    kmActualKitInput.addEventListener('input', updateProximoKit);
+    kitForm.querySelectorAll('input[name="intervalo-kit"]').forEach(radio => {
+      radio.addEventListener('change', updateProximoKit);
+    });
+
+    // Validación y envío del formulario
+    kitForm.onsubmit = async function(e) {
+      e.preventDefault();
+      // Validar campos requeridos
+      const requiredFields = kitForm.querySelectorAll('[required]');
+      let isValid = true;
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          isValid = false;
+          field.classList.add('error');
+        } else {
+          field.classList.remove('error');
+        }
+      });
+      if (!isValid) return;
+
+      // Validar email
+      const emailField = document.getElementById('email-kit');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailField.value)) {
+        alert('Por favor, ingresa un correo electrónico válido');
+        emailField.classList.add('error');
+        return;
+      }
+
+      // Mostrar indicador de carga
+      const submitBtn = kitForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+      submitBtn.style.opacity = '0.7';
+
+      try {
+        // Obtener datos del formulario
+        const formData = new FormData(kitForm);
+        const data = Object.fromEntries(formData.entries());
+
+        // Formatear fecha
+        const fechaObj = new Date(data['fecha-kit']);
+        const fechaFormateada = fechaObj.toLocaleDateString('es-ES', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+
+        // Parámetros para el template de EmailJS
+        const templateParams = {
+          email: data['email-kit'],
+          name: 'Cliente Elite Loyal',
+          marca_vehiculo_kit: data['marca-vehiculo-kit'],
+          marca_kit: data['marca-kit'],
+          tipo_kit: data['tipo-kit'],
+          mecanismo: data['mecanismo'],
+          fecha_kit: fechaFormateada,
+          intervalo_kit: `${parseInt(data['intervalo-kit']).toLocaleString()} km`,
+          km_actual_kit: `${parseInt(data['km_actual_kit']).toLocaleString()} km`,
+          km_proximo_kit: `${parseInt(data['km_proximo_kit']).toLocaleString()} km`
+        };
+
+        // Enviar email usando EmailJS
+        const response = await emailjs.send('service_v1ze02i', 'template_iejutnw', templateParams);
+        console.log('Email enviado exitosamente:', response);
+
+        // Mostrar mensaje de éxito
+        alert('¡Información enviada exitosamente! 📧\n\nRecibirás un correo electrónico con todos los detalles de tu cambio de kit de tiempo y la información para el próximo mantenimiento.\n\n¡Gracias por confiar en Elite Loyal!');
+
+        // Cerrar modal y resetear formulario
+        kitModal.style.display = 'none';
+        document.body.style.overflow = '';
+        kitForm.reset();
+        kmProximoKitInput.value = '';
+
+      } catch (error) {
+        console.error('Error al enviar email:', error);
+        alert('❌ Error al enviar el correo electrónico.\n\nPor favor, verifica tu conexión a internet e intenta nuevamente.\n\nSi el problema persiste, contáctanos por WhatsApp: +58 414-9208034');
+      } finally {
+        // Restaurar botón
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        submitBtn.style.opacity = '1';
+      }
+    };
+  }
 // Inicializar EmailJS
 emailjs.init('kGnKXT_qHqEq7HQxP');
 
@@ -60,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // --- Modal de cambio de aceite ---
   const openOilForm = document.getElementById('open-oil-form');
+  const openOilForm2 = document.getElementById('open-oil-form-2');
   const oilModal = document.getElementById('oil-modal');
   const closeOilForm = document.getElementById('close-oil-form');
   const oilForm = document.getElementById('oil-form');
@@ -67,13 +200,17 @@ document.addEventListener('DOMContentLoaded', function() {
   const kmProximoInput = document.getElementById('km_proximo');
 
   if (openOilForm && oilModal && closeOilForm) {
-    openOilForm.onclick = (e) => {
+    function openOilModalHandler(e) {
       e.preventDefault();
       oilModal.style.display = 'flex';
       oilModal.style.alignItems = 'center';
       oilModal.style.justifyContent = 'center';
       document.body.style.overflow = 'hidden';
-    };
+    }
+    openOilForm.onclick = openOilModalHandler;
+    if (openOilForm2) {
+      openOilForm2.onclick = openOilModalHandler;
+    }
 
     closeOilForm.onclick = (e) => {
       e.preventDefault();

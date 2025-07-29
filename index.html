@@ -111,6 +111,67 @@
         </a>
       </div>
       <div class="elite-oil-change" id="open-oil-form" style="cursor:pointer;text-align:center;margin:32px auto 0 auto;max-width:350px;display:block;">Próximo cambio de aceite</div>
+      <div class="elite-oil-change" id="open-kit-form" style="cursor:pointer;text-align:center;margin:32px auto 0 auto;max-width:350px;display:block;">Próximo cambio de kit de tiempo</div>
+      <!-- Modal para kit de tiempo -->
+      <div id="kit-modal" class="oil-modal">
+        <div class="oil-modal-content">
+          <span class="oil-modal-close" id="close-kit-form">&times;</span>
+          <h2 style="text-align:center;">Gestión de Cambio de Kit de Tiempo</h2>
+          <form id="kit-form" style="display:flex;flex-direction:column;gap:16px;max-width:400px;margin:0 auto;">
+            <div>
+              <label for="marca-vehiculo-kit">Marca del vehículo:</label>
+              <input type="text" id="marca-vehiculo-kit" name="marca-vehiculo-kit" required placeholder="Ej: Toyota, Ford, Chevrolet" style="width:100%;padding:8px;border-radius:6px;border:1px solid #00e5ff;background:#101c2c;color:#fff;">
+            </div>
+            <div>
+              <label for="marca-kit">Marca del kit de tiempo:</label>
+              <input type="text" id="marca-kit" name="marca-kit" required placeholder="Ej: Gates, INA, SKF" style="width:100%;padding:8px;border-radius:6px;border:1px solid #00e5ff;background:#101c2c;color:#fff;">
+            </div>
+            <div>
+              <label for="tipo-kit">Tipo de kit de tiempo:</label>
+              <input type="text" id="tipo-kit" name="tipo-kit" required placeholder="Ej: Completo, Solo correa, Solo tensor" style="width:100%;padding:8px;border-radius:6px;border:1px solid #00e5ff;background:#101c2c;color:#fff;">
+            </div>
+            <div>
+              <label>¿El kit es de cadena o correa?</label>
+              <div class="radio-group" style="display:flex;gap:16px;">
+                <label class="radio-label" style="display:flex;align-items:center;gap:6px;">
+                  <input type="radio" name="mecanismo" value="cadena" required> Cadena
+                </label>
+                <label class="radio-label" style="display:flex;align-items:center;gap:6px;">
+                  <input type="radio" name="mecanismo" value="correa"> Correa
+                </label>
+              </div>
+            </div>
+            <div>
+              <label for="fecha-kit">Fecha del cambio:</label>
+              <input type="date" id="fecha-kit" name="fecha-kit" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #00e5ff;background:#101c2c;color:#fff;">
+            </div>
+            <div>
+              <label>¿Cada cuánto cambias el kit de tiempo?</label>
+              <div class="radio-group" style="display:flex;gap:16px;">
+                <label class="radio-label" style="display:flex;align-items:center;gap:6px;">
+                  <input type="radio" name="intervalo-kit" value="25000" required> 25.000 km
+                </label>
+                <label class="radio-label" style="display:flex;align-items:center;gap:6px;">
+                  <input type="radio" name="intervalo-kit" value="45000"> 45.000 km
+                </label>
+              </div>
+            </div>
+            <div>
+              <label for="km_actual_kit">Kilometraje actual:</label>
+              <input type="number" id="km_actual_kit" name="km_actual_kit" required placeholder="Ej: 45000" style="width:100%;padding:8px;border-radius:6px;border:1px solid #00e5ff;background:#101c2c;color:#fff;">
+            </div>
+            <div>
+              <label for="km_proximo_kit">Kilometraje del próximo cambio:</label>
+              <input type="number" id="km_proximo_kit" name="km_proximo_kit" readonly placeholder="Se calculará automáticamente" style="width:100%;padding:8px;border-radius:6px;border:1px solid #00e5ff;background:#101c2c;color:#fff;">
+            </div>
+            <div>
+              <label for="email-kit">Correo electrónico:</label>
+              <input type="email" id="email-kit" name="email-kit" required placeholder="tu@email.com" style="width:100%;padding:8px;border-radius:6px;border:1px solid #00e5ff;background:#101c2c;color:#fff;">
+            </div>
+            <button type="submit" style="background:#00e5ff;color:#101c2c;border:none;border-radius:8px;padding:10px 0;font-size:1.1rem;font-weight:700;width:100%;max-width:320px;margin:0 auto;cursor:pointer;">Enviar información</button>
+          </form>
+        </div>
+      </div>
       <div id="oil-modal" class="oil-modal">
         <div class="oil-modal-content">
           <span class="oil-modal-close" id="close-oil-form">&times;</span>
@@ -124,17 +185,14 @@
               <label for="marca">Marca de aceite:</label>
               <input type="text" id="marca" name="marca" required placeholder="Ej: Mobil 1, Castrol, Shell">
             </div>
-            
             <div>
               <label for="tipo">Tipo de aceite:</label>
               <input type="text" id="tipo" name="tipo" required placeholder="Ej: 5W-30, 10W-40, Sintético">
             </div>
-            
             <div>
               <label for="fecha">Fecha del cambio:</label>
               <input type="date" id="fecha" name="fecha" required>
             </div>
-            
             <div>
               <label>¿Cada cuánto cambias el aceite?</label>
               <div class="radio-group">
@@ -146,26 +204,23 @@
                 </label>
               </div>
             </div>
-            
             <div>
               <label for="km_actual">Kilometraje actual:</label>
               <input type="number" id="km_actual" name="km_actual" required placeholder="Ej: 45000">
             </div>
-            
             <div>
               <label for="km_proximo">Kilometraje del próximo cambio:</label>
               <input type="number" id="km_proximo" name="km_proximo" readonly placeholder="Se calculará automáticamente">
             </div>
-            
             <div>
               <label for="email">Correo electrónico:</label>
               <input type="email" id="email" name="email" required placeholder="tu@email.com">
             </div>
-            
             <button type="submit">Enviar información</button>
           </form>
         </div>
       </div>
+
     </main>
   </div>
 
