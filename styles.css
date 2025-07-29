@@ -1,3 +1,41 @@
+/* --- Botón rectangular destacado para Mis Documentos --- */
+#open-docs.elite-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+  background: linear-gradient(90deg, #00e5ff 0%, #0e223a 100%);
+  color: #101c2c;
+  border: 2px solid #00e5ff;
+  border-radius: 14px;
+  font-size: 1.18rem;
+  font-weight: 700;
+  padding: 18px 28px;
+  margin: 18px 0 24px 0;
+  box-shadow: 0 4px 24px #00e5ff33;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  min-width: 260px;
+  max-width: 420px;
+}
+#open-docs.elite-btn:hover {
+  background: linear-gradient(90deg, #00b8cc 0%, #101c2c 100%);
+  color: #fff;
+  box-shadow: 0 6px 32px #00e5ff77;
+}
+#open-docs .elite-btn-icon {
+  width: 48px !important;
+  height: 48px !important;
+  margin-right: 0;
+}
+
+/* --- Recuadro de seguridad y beneficio en el modal de documentos --- */
+#docs-modal .oil-modal-content > div[style*="background:#0e223a"] {
+  border: 2px solid #00e5ff;
+  background: linear-gradient(90deg, #0e223a 60%, #101c2c 100%);
+  margin-bottom: 20px;
+  box-shadow: 0 2px 16px #00e5ff22;
+}
 /* --- Documentos Modal y Botón --- */
 #docs-modal .oil-modal-content {
   background: #101c2c;

@@ -110,14 +110,18 @@
           <div class="elite-btn-text">Promoción</div>
         </a>
       <a class="elite-btn" href="#" id="open-docs" aria-label="Gestionar documentos personales">
-        <img src="./assets/iconos/contrato.png" class="elite-btn-icon" alt="Icono de documentos" loading="lazy">
-        <div class="elite-btn-text">Mis Documentos</div>
+        <img src="./assets/iconos/contrato.png" class="elite-btn-icon" alt="Icono de documentos" loading="lazy" style="width:48px;height:48px;">
+        <div class="elite-btn-text" style="font-size:1.18rem;font-weight:700;">Mis Documentos</div>
       </a>
       <!-- Modal para gestión de documentos -->
       <div id="docs-modal" class="oil-modal">
-        <div class="oil-modal-content" style="max-width:420px;width:96vw;">
+        <div class="oil-modal-content" style="max-width:440px;width:96vw;">
           <span class="oil-modal-close" id="close-docs-modal">&times;</span>
           <h2 style="text-align:center;">Gestión de Documentos</h2>
+          <div style="background:#0e223a;border-radius:8px;padding:14px 14px 10px 14px;margin-bottom:16px;border:1px solid #00e5ff55;display:flex;flex-direction:column;gap:6px;">
+            <div style="color:#00e5ff;font-weight:600;font-size:1.05rem;">🔒 Seguridad: Tus documentos están protegidos y solo se almacenan en tu dispositivo. Nadie más tendrá acceso.</div>
+            <div style="color:#b2eaff;font-size:0.98rem;">Beneficio: Aquí puedes respaldar fotos o archivos importantes (cédula, licencia, póliza, carnet, etc). En caso de emergencia o si no tienes tus documentos físicos, podrás acceder a ellos rápidamente desde tu teléfono.</div>
+          </div>
           <form id="docs-form" style="display:flex;flex-direction:column;gap:16px;max-width:380px;margin:0 auto;">
             <div style="display:flex;flex-direction:column;gap:8px;">
               <label for="doc-input">Sube hasta 5 documentos (PDF, JPG, PNG):</label>
