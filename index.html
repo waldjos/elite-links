@@ -56,7 +56,7 @@
     <div class="blob blob3"></div>
   </div>
   <div id="particles-js"></div>
-  <button id="theme-toggle">🌙</button>
+  <!-- Botón de cambio de tema eliminado -->
 
   <div class="main-container">
     <!-- Logo y tagline -->
@@ -109,10 +109,10 @@
           <img src="./assets/iconos/promociones.png" class="elite-btn-icon" alt="Icono de promociones" loading="lazy">
           <div class="elite-btn-text">Promoción</div>
         </a>
-      <a class="elite-btn" href="#" id="open-docs" aria-label="Gestionar documentos personales">
-        <img src="./assets/iconos/contrato.png" class="elite-btn-icon" alt="Icono de documentos" loading="lazy" style="width:48px;height:48px;">
-        <div class="elite-btn-text" style="font-size:1.18rem;font-weight:700;">Mis Documentos</div>
-      </a>
+        <a class="elite-btn" href="#" id="open-docs" aria-label="Gestionar documentos personales">
+          <img src="./assets/iconos/contrato.png" class="elite-btn-icon" alt="Icono de documentos" loading="lazy">
+          <div class="elite-btn-text">Mis Documentos</div>
+        </a>
       <!-- Modal para gestión de documentos -->
       <div id="docs-modal" class="oil-modal">
         <div class="oil-modal-content" style="max-width:440px;width:96vw;">
@@ -438,8 +438,26 @@ Si cualquier disposición de estas Condiciones se considerara ilegal, nula o ine
 
   <!-- JavaScript externo -->
   <script src="./script.js"></script>
-  <footer class="elite-footer-final">
-    Todos los derechos reservados 2025
+  <footer class="elite-footer-final" style="background: linear-gradient(90deg, #00e5ff 0%, #0e223a 100%); color: #fff; padding: 32px 0 18px 0; text-align: center; position: relative; margin-top: 48px; box-shadow: 0 -2px 24px #00e5ff33;">
+    <div style="max-width: 900px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; flex-direction: column;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px; justify-content: center;">
+        <img src="assets/Logo/logoeliteblanco.png" alt="Elite Aliados Loyal Logo" style="height: 54px; filter: drop-shadow(0 0 12px #00e5ff); background: rgba(10,20,40,0.7); border-radius: 12px; padding: 4px 12px;">
+        <span style="font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; color: #00e5ff; text-shadow: 0 2px 12px #00e5ff77;"></span>
+      </div>
+      <div style="font-size: 1.05rem; color: #b2eaff; margin: 10px 0 0 0;">
+        Tu aliado confiable en movilidad y seguridad vehicular en Venezuela.<br>
+        Servicios de grúa, emergencias, pólizas RCV, repuestos y más.
+      </div>
+      <div style="margin: 18px 0 0 0; display: flex; gap: 18px; justify-content: center; align-items: center;">
+        <a href="https://www.instagram.com/elitealiadosloyal?igsh=MXFsaGwycWI3bmJzYQ==" target="_blank" rel="noopener" aria-label="Instagram" style="color: #00e5ff; font-size: 2rem; transition: color 0.2s;"><img src="assets/iconos/redes.png" alt="Instagram" style="height: 32px; filter: drop-shadow(0 0 8px #00e5ff);"></a>
+        <a href="https://wa.link/3764td?text=Hola%20Elite%20Aliados%20Loyal" target="_blank" rel="noopener" aria-label="WhatsApp" style="color: #00e5ff; font-size: 2rem; transition: color 0.2s;"><img src="assets/iconos/whast.png" alt="WhatsApp" style="height: 32px; filter: drop-shadow(0 0 8px #00e5ff);"></a>
+        <a href="mailto:elitealiadosloyal@gmail.com" aria-label="Email" style="color: #00e5ff; font-size: 2rem; transition: color 0.2s;"><ion-icon name="mail-outline"></ion-icon></a>
+      </div>
+      <div style="margin: 18px 0 0 0; font-size: 0.98rem; color: #b2eaff;">
+        <span style="opacity:0.8;">&copy; 2025 Elite Aliados Loyal. Todos los derechos reservados.</span>
+      </div>
+    </div>
+    <div style="position: absolute; left: 0; bottom: 0; width: 100%; height: 6px; background: linear-gradient(90deg, #00e5ff 0%, #0e223a 100%); box-shadow: 0 0 24px #00e5ff77;"></div>
   </footer>
 </body>
 </html>
