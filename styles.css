@@ -1,3 +1,62 @@
+/* --- Documentos Modal y Botón --- */
+#docs-modal .oil-modal-content {
+  background: #101c2c;
+  border: 2px solid #00e5ff;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px #00e5ff33;
+  color: #fff;
+  padding: 32px 18px 24px 18px;
+  position: relative;
+  max-width: 420px;
+  width: 96vw;
+  margin: 0 auto;
+}
+#docs-modal .oil-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 2rem;
+  color: #00e5ff;
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 10;
+}
+#docs-modal input[type="file"]::-webkit-file-upload-button {
+  background: #00e5ff;
+  color: #101c2c;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+#docs-modal input[type="file"]::file-selector-button {
+  background: #00e5ff;
+  color: #101c2c;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+#docs-modal button,
+#docs-modal a[download] {
+  transition: background 0.2s, color 0.2s;
+}
+#docs-modal button:hover,
+#docs-modal a[download]:hover {
+  background: #00b8cc;
+  color: #fff;
+}
+#docs-modal #docs-preview > div,
+#docs-modal #saved-docs-list > div {
+  transition: box-shadow 0.2s;
+}
+#docs-modal #docs-preview > div:hover,
+#docs-modal #saved-docs-list > div:hover {
+  box-shadow: 0 0 12px #00e5ff77;
+}
 /* Root Variables */
 :root {
   --bg-1: #0a1020;

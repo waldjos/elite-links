@@ -109,6 +109,31 @@
           <img src="./assets/iconos/promociones.png" class="elite-btn-icon" alt="Icono de promociones" loading="lazy">
           <div class="elite-btn-text">Promoción</div>
         </a>
+      <a class="elite-btn" href="#" id="open-docs" aria-label="Gestionar documentos personales">
+        <img src="./assets/iconos/contrato.png" class="elite-btn-icon" alt="Icono de documentos" loading="lazy">
+        <div class="elite-btn-text">Mis Documentos</div>
+      </a>
+      <!-- Modal para gestión de documentos -->
+      <div id="docs-modal" class="oil-modal">
+        <div class="oil-modal-content" style="max-width:420px;width:96vw;">
+          <span class="oil-modal-close" id="close-docs-modal">&times;</span>
+          <h2 style="text-align:center;">Gestión de Documentos</h2>
+          <form id="docs-form" style="display:flex;flex-direction:column;gap:16px;max-width:380px;margin:0 auto;">
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <label for="doc-input">Sube hasta 5 documentos (PDF, JPG, PNG):</label>
+              <input type="file" id="doc-input" name="doc-input" accept="image/*,application/pdf" capture="environment" multiple style="width:100%;padding:8px;border-radius:6px;border:1px solid #00e5ff;background:#101c2c;color:#fff;"/>
+              <small style="color:#b2eaff;">Puedes tomar una foto o elegir un archivo. Máx. 5 documentos.</small>
+            </div>
+            <div id="docs-preview" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
+            <button type="button" id="save-docs-btn" style="background:#00e5ff;color:#101c2c;border:none;border-radius:8px;padding:10px 0;font-size:1.1rem;font-weight:700;width:100%;max-width:320px;margin:0 auto;cursor:pointer;">Guardar documentos</button>
+          </form>
+          <hr style="margin:18px 0; border:0; border-top:1px solid #00e5ff33;">
+          <div>
+            <h3 style="text-align:center;font-size:1.1rem;color:#00e5ff;margin-bottom:8px;">Tus documentos guardados</h3>
+            <div id="saved-docs-list" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;"></div>
+          </div>
+        </div>
+      </div>
       </div>
       <div class="elite-oil-change" id="open-oil-form" style="cursor:pointer;text-align:center;margin:32px auto 0 auto;max-width:350px;display:block;">Próximo cambio de aceite</div>
       <div class="elite-oil-change" id="open-kit-form" style="cursor:pointer;text-align:center;margin:32px auto 0 auto;max-width:350px;display:block;">Próximo cambio de kit de tiempo</div>

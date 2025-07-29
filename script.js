@@ -1,3 +1,219 @@
+// --- Gestión de Documentos Locales ---
+const openDocsBtn = document.getElementById('open-docs');
+const docsModal = document.getElementById('docs-modal');
+const closeDocsModal = document.getElementById('close-docs-modal');
+const docInput = document.getElementById('doc-input');
+const docsPreview = document.getElementById('docs-preview');
+const saveDocsBtn = document.getElementById('save-docs-btn');
+const savedDocsList = document.getElementById('saved-docs-list');
+
+let selectedDocs = [];
+
+// IndexedDB helpers
+const DB_NAME = 'eliteDocsDB';
+const DB_STORE = 'docs';
+let db = null;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    if (db) return resolve(db);
+    const request = indexedDB.open(DB_NAME, 1);
+    request.onerror = () => reject('No se pudo abrir la base de datos');
+    request.onsuccess = () => {
+      db = request.result;
+      resolve(db);
+    };
+    request.onupgradeneeded = (e) => {
+      db = e.target.result;
+      if (!db.objectStoreNames.contains(DB_STORE)) {
+        db.createObjectStore(DB_STORE, { keyPath: 'id', autoIncrement: true });
+      }
+    };
+  });
+}
+
+function saveDocsToDB(files) {
+  return openDB().then(db => {
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(DB_STORE, 'readwrite');
+      const store = tx.objectStore(DB_STORE);
+      // Primero, limpiar los docs anteriores
+      const clearReq = store.clear();
+      clearReq.onsuccess = () => {
+        let count = 0;
+        files.forEach(file => {
+          const addReq = store.add(file);
+          addReq.onsuccess = () => {
+            count++;
+            if (count === files.length) resolve();
+          };
+          addReq.onerror = reject;
+        });
+        if (files.length === 0) resolve();
+      };
+      clearReq.onerror = reject;
+    });
+  });
+}
+
+function getDocsFromDB() {
+  return openDB().then(db => {
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(DB_STORE, 'readonly');
+      const store = tx.objectStore(DB_STORE);
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = reject;
+    });
+  });
+}
+
+function renderPreview(files) {
+  docsPreview.innerHTML = '';
+  files.forEach((file, idx) => {
+    const div = document.createElement('div');
+    div.style = 'background:#101c2c;border:1px solid #00e5ff;border-radius:6px;padding:6px 8px;max-width:110px;display:flex;flex-direction:column;align-items:center;gap:4px;';
+    if (file.type.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.src = file.preview;
+      img.alt = file.name;
+      img.style = 'max-width:90px;max-height:90px;border-radius:4px;';
+      div.appendChild(img);
+    } else if (file.type === 'application/pdf') {
+      const icon = document.createElement('span');
+      icon.innerHTML = '📄';
+      icon.style = 'font-size:2.2rem;';
+      div.appendChild(icon);
+    }
+    const name = document.createElement('div');
+    name.textContent = file.name;
+    name.style = 'font-size:0.85rem;color:#b2eaff;text-align:center;word-break:break-all;';
+    div.appendChild(name);
+    const removeBtn = document.createElement('button');
+    removeBtn.textContent = 'Quitar';
+    removeBtn.style = 'background:#ff0055;color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:0.85rem;cursor:pointer;margin-top:2px;';
+    removeBtn.onclick = () => {
+      selectedDocs.splice(idx, 1);
+      renderPreview(selectedDocs);
+    };
+    div.appendChild(removeBtn);
+    docsPreview.appendChild(div);
+  });
+}
+
+function renderSavedDocs(docs) {
+  savedDocsList.innerHTML = '';
+  if (!docs.length) {
+    savedDocsList.innerHTML = '<div style="color:#b2eaff;font-size:0.95rem;">No hay documentos guardados.</div>';
+    return;
+  }
+  docs.forEach(doc => {
+    const div = document.createElement('div');
+    div.style = 'background:#101c2c;border:1px solid #00e5ff;border-radius:6px;padding:6px 8px;max-width:110px;display:flex;flex-direction:column;align-items:center;gap:4px;';
+    if (doc.type.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.src = doc.data;
+      img.alt = doc.name;
+      img.style = 'max-width:90px;max-height:90px;border-radius:4px;';
+      div.appendChild(img);
+    } else if (doc.type === 'application/pdf') {
+      const icon = document.createElement('span');
+      icon.innerHTML = '📄';
+      icon.style = 'font-size:2.2rem;';
+      div.appendChild(icon);
+    }
+    const name = document.createElement('div');
+    name.textContent = doc.name;
+    name.style = 'font-size:0.85rem;color:#b2eaff;text-align:center;word-break:break-all;';
+    div.appendChild(name);
+    const downloadBtn = document.createElement('a');
+    downloadBtn.textContent = 'Ver/Descargar';
+    downloadBtn.style = 'background:#00e5ff;color:#101c2c;border:none;border-radius:4px;padding:2px 8px;font-size:0.85rem;cursor:pointer;margin-top:2px;text-decoration:none;display:inline-block;';
+    downloadBtn.href = doc.data;
+    downloadBtn.download = doc.name;
+    downloadBtn.target = '_blank';
+    div.appendChild(downloadBtn);
+    savedDocsList.appendChild(div);
+  });
+}
+
+if (openDocsBtn && docsModal && closeDocsModal) {
+  openDocsBtn.addEventListener('click', e => {
+    e.preventDefault();
+    docsModal.style.display = 'block';
+    getDocsFromDB().then(renderSavedDocs);
+  });
+  closeDocsModal.addEventListener('click', () => {
+    docsModal.style.display = 'none';
+    selectedDocs = [];
+    docsPreview.innerHTML = '';
+  });
+  window.addEventListener('click', e => {
+    if (e.target === docsModal) {
+      docsModal.style.display = 'none';
+      selectedDocs = [];
+      docsPreview.innerHTML = '';
+    }
+  });
+}
+
+if (docInput) {
+  docInput.addEventListener('change', e => {
+    const files = Array.from(e.target.files);
+    if ((selectedDocs.length + files.length) > 5) {
+      alert('Solo puedes cargar hasta 5 documentos.');
+      return;
+    }
+    const readers = files.map(file => {
+      return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          resolve({
+            name: file.name,
+            type: file.type,
+            preview: file.type.startsWith('image/') ? ev.target.result : undefined,
+            data: ev.target.result
+          });
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+    Promise.all(readers).then(results => {
+      selectedDocs = selectedDocs.concat(results).slice(0, 5);
+      renderPreview(selectedDocs);
+    });
+  });
+}
+
+if (saveDocsBtn) {
+  saveDocsBtn.addEventListener('click', () => {
+    if (!selectedDocs.length) {
+      alert('Selecciona al menos un documento para guardar.');
+      return;
+    }
+    // Guardar solo los datos necesarios
+    const docsToSave = selectedDocs.map(doc => ({
+      name: doc.name,
+      type: doc.type,
+      data: doc.data
+    }));
+    saveDocsToDB(docsToSave).then(() => {
+      alert('Documentos guardados localmente.');
+      selectedDocs = [];
+      docsPreview.innerHTML = '';
+      getDocsFromDB().then(renderSavedDocs);
+    }).catch(() => {
+      alert('Error al guardar los documentos.');
+    });
+  });
+}
+
+// Mostrar documentos guardados al abrir modal
+if (docsModal) {
+  docsModal.addEventListener('show', () => {
+    getDocsFromDB().then(renderSavedDocs);
+  });
+}
   // --- Modal de kit de tiempo ---
   const openKitForm = document.getElementById('open-kit-form');
   const kitModal = document.getElementById('kit-modal');
